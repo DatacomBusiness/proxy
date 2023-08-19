@@ -23,7 +23,7 @@ class Host extends Table{
 
 	static async addCache(host, parentOBJ){
 		try{
-			await this.add({...parentOBJ, host, is_cache: true}, true).catch(err => {console.log("this.add err", err);})
+			await this.add({...parentOBJ, host, is_cache: true}, true).catch(err => {console.log("this.add err", JSON.stringify(err));})
 			await Cached.add({
 				host: host,
 				parent: parentOBJ.host
