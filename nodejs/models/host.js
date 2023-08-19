@@ -27,6 +27,8 @@ class Host extends Table{
 			await Cached.add({
 				host: host,
 				parent: parentOBJ.host
+			}).catch(err => {
+				console.log("promise addCache error", err);
 			});
 		}catch(error){
 			console.error('add cache error', {...parentOBJ, host, is_cache: true}, error)
