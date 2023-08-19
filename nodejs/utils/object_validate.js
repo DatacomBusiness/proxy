@@ -19,6 +19,10 @@ function processKeys(map, data, partial){
 	let errors = [];
 	let out = {};
 
+	data["targetport"] = Number(data["targetPort"])
+	data["targetssl"] = Boolean(data["targetssl"])
+	data["forcessl"] = Boolean(data["forcessl"])
+
 	for(let key of Object.keys(map)){
 
 		if(!map[key].always && partial && !data.hasOwnProperty(key)) continue;
@@ -47,7 +51,6 @@ function processKeys(map, data, partial){
 
 	if(errors.length !== 0){
 		throw new ObjectValidateError(errors);
-		return {__errors__: errors};
 	}
 
 	return out;

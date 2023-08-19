@@ -1,8 +1,6 @@
 'use strict';
 
 const {createClient} = require('redis');
-const objValidate = require('../utils/object_validate');
-const conf = require('../conf/conf');
 
 const client = createClient({});
 
