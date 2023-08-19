@@ -29,7 +29,7 @@ class Host extends Table{
 				parent: parentOBJ.host
 			});
 		}catch(error){
-			console.error('add cahce error', {...parentOBJ, host, is_cache: true}, error)
+			console.error('add cache error', {...parentOBJ, host, is_cache: true}, error)
 			throw error;
 		}
 	}
