@@ -1,4 +1,4 @@
-'use ';
+'use strict';
 
 const client = require('../utils/redis');
 
