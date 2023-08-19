@@ -1,0 +1,74 @@
+{
+	"update.mode": "start",
+	"update.enableWindowsBackgroundUpdates": true,
+	"extensions.autoCheckUpdates": true,
+	"window.zoomLevel": 0,
+	"search.exclude": {
+		"**/dist": true,
+		"**/node_modules": false
+	},
+	"workbench.editor.focusRecentEditorAfterClose": false,
+	"workbench.editor.splitSizing": "split",
+	"workbench.editor.tabSizing": "shrink",
+	"workbench.colorTheme": "Default Light+",
+  "workbench.iconTheme": "vscode-great-icons",
+
+	"editor.tabSize": 2,
+	"editor.fontLigatures": true,
+	"editor.fontFamily": "Fira Code, Inconsolata, 'Kano, Courier New', monospace",
+	"editor.fontWeight": "300",
+	"editor.cursorBlinking":"phase",
+	"editor.cursorStyle":"line",
+	"editor.fontSize": 16,
+	"editor.tabCompletion": "on",
+	"editor.lineHeight": 19,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"explorer.openEditors.visible": 1,
+	"terminal.integrated.fontWeight": "300",
+	"workbench.colorCustomizations": {
+			"activityBar.background": "#036374"
+	},
+	"tailwindCSS.emmetCompletions": true,
+  "vsintellicode.typescript.completionsEnabled": true,
+	"vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "editor.quickSuggestions": {
+      "other": true,
+      "comments": true,
+      "strings": true
+  },
+  "vsicons.dontShowNewVersionMessage": true,
+  "java.configuration.checkProjectSettingsExclusions": false,
+  "terminal.integrated.fontWeightBold": "300",
+
+	"python.pythonPath": "/usr/bin/python3",
+  "python.formatting.provider": "yapf",
+	"python.jediEnabled": false,
+  "vetur.validation.template": false,
+  "eslint.validate": [
+    {
+      "language": "vue"
+    },
+    {
+      "language": "html"
+    },
+    {
+      "language": "javascript"
+    }
+  ],
+	
+  "emmet.includeLanguages": {
+    "vue-html": "html",
+    "javascript": "jsx",
+    "xml": "xml",
+    "scss": "scss",
+    "less": "less",
+    "stylus": "stylus",
+    "css": "css",
+    "hbs": "handlebars"
+  },
+	"editor.largeFileOptimizations": false,
+	"python.languageServer": "Pylance",
+	"json.maxItemsComputed": 20000,
+  "editor.foldingMaximumRegions": 20000,
+}

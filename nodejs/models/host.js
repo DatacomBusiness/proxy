@@ -2,7 +2,6 @@
 
 const Table = require('../utils/redis_model');
 
-
 class Host extends Table{
 	static _key = 'host';
 	static _keyMap = {
@@ -22,9 +21,7 @@ class Host extends Table{
 	static lookUpObj = {};
 	static __lookUpIsReady = false;
 
-
-
-	async addCache(host, parentOBJ){
+	static async addCache(host, parentOBJ){
 		try{
 			await this.add({...parentOBJ, host, is_cache: true}, true)
 			await Cached.add({
