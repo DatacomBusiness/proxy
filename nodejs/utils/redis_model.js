@@ -86,9 +86,7 @@ class Table{
 		// Add a entry to this redis table.
 		try{
 			// Validate the passed data by the keyMap schema.
-			console.log("data1", data);
 			data = objValidate.processKeys(this._keyMap, data);
-			console.log("data2", data);
 
 			// Do not allow the caller to overwrite an existing index key,
 			if(data[this._key] && await this.exists(data)){
