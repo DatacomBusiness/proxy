@@ -158,9 +158,9 @@ class Table{
 				// console.log("this.constructor", this.constructor);
 				// console.log("this[this.constructor._key", this[this.constructor._key]);
 				
-				let redisKey = redisPrefix(updatePrefix)
+				let redisKey = redisPrefix(`${this.constructor.name}_${data["host"]}`)
 				console.log("redisKey", redisKey);
-				var oldKey = redisPrefix(this[this.constructor._key])
+				var oldKey = redisPrefix(updatePrefix)
 				console.log("oldKey, oldKey", oldKey);
 
 				// Merge the current data into with the updated data 
