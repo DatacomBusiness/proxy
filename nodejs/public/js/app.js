@@ -234,6 +234,10 @@ app.util = (function(app){
 			return;
 		}else{
 			if(options.type) $target.addClass('alert-' + options.type);
+			$target.style.display = "inline"
+			setTimeout(() => {
+				$target.style.display = "none"
+			}, 3000);
 			$target.html(message).slideDown('fast');
 		}
 	}

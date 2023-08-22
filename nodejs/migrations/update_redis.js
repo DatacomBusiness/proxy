@@ -13,6 +13,7 @@ var safeList = [
 	"proxy_host",
 	"proxy_User",
 	"proxy_Host",
+	// "proxy_Cached",
 	"token_auth"
 ]
 
@@ -27,24 +28,23 @@ var safeList = [
 	
 		// Loop thru SMEMBERS and make delete all Keys that are not associated with the domains
 		let allKeys = await client.KEYS("*")
-		
+		// Get list of hosts
+		let hosts = await client.SMEMBERS('proxy_Host');
+		console.log("hosts", hosts);
+
+		// Find the SMEMBERS that contain *., *.*, etc and allow those domains with the proper subdomain pretext
+		let starHostLen = hosts.filter(itm => itm.includes("*")).length // I assume that the user would want 1 subdomain, then 2, then 3, etc. Not just 5.
+		console.log("starHostLen the total subdomains allowed", starHostLen);
+				
 		for(let key in allKeys){
 			// Loop through each key and if does not match or start with the safeList, then delete it
-			let hosts = await client.SMEMBERS('proxy_Host');
-			console.log("hosts", hosts);
-
-			// Find the SMEMBERS that contain *., *.*, etc and allow those domains with the proper subdomain pretext
-			let starHostLen = hosts.filter(itm => itm.includes("*")).length // I assume that the user would want 1 subdomain, then 2, then 3, etc. Not just 5.
-			console.log("starHostLen the total subdomains allowed", starHostLen);
-
+			
 			// Find base domain, and see how many subdomains this key has
 			let parts = key.split(".");	let subDomainQty = parts.length -2; let arr = parts.slice(-2);	let domain = arr.join();
 			// If subDomainQty is greater than starLenHost, then delete the keys that have more 
 			if(subDomainQty > starHostLen) {
 				await client.DEL(key)
 			}
-
-
 	
 			for(let safe of safeList) {
 				if (!key.startswith(safe) || !key.includes(safe))
