@@ -190,6 +190,17 @@ class Table{
 				let added = await client.SADD(`${conf.redis.prefix}${this.constructor.name}`, data["host"])
 				console.log("added", added);
 
+				// update Cache Set
+				let removedC = await client.SREM(`${conf.redis.prefix}_Cached`, oldHost)
+				console.log("removedC", removedC);
+				let addedC = await client.SADD(`${conf.redis.prefix}_Cached`, data["host"])
+				console.log("addedC", addedC);
+
+				// Set new Host
+				console.log("this.host1", this.host);
+				this.host = data["host"]
+				console.log("this.host2", this.host);
+
 				// Loop through the data and Set redis HKEY
 				for(let each in data) {
 					console.log("each", each);
