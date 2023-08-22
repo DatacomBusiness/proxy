@@ -313,7 +313,6 @@ function formAJAX( btn, del ) {
 	var method = $form.attr('method') || 'post';
 
 	console.log('formAJAX method', method)
-	console.log("formData", formData);
 
 	if( !$form.validate(
 		{
@@ -327,7 +326,7 @@ function formAJAX( btn, del ) {
 
 	app.api[method]($form.attr( 'action' ), formData, function(error, data){
 		console.log("formAJAX data", data);
-		tableAJAX( data.message ); //re-populate table
+		tableAJAX( "Success" ); //re-populate table
 		eval( $form.attr( 'evalAJAX' ) ); //gets JS to run after completion
 	});
 
