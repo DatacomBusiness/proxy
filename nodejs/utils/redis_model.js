@@ -37,7 +37,7 @@ class Table{
 			let result = await client.HGETALL(
 				redisPrefix(getPrefix)
 			);
-			console.log("result", result);
+			console.log("get result", result);
 
 			if(!Object.keys(result).length){
 				let error = new Error('EntryNotFound');
@@ -122,7 +122,7 @@ class Table{
 				console.log("data[this._key]", data[this._key]);
 
 				var updatePrefix = `${this.prototype.constructor.name}_${data[this._key]}`
-				console.log("add updatePrefix", updatePrefix);
+				console.log("125 add updatePrefix", updatePrefix);
 
 				await client.HSET(
 					redisPrefix(updatePrefix), 
@@ -142,6 +142,12 @@ class Table{
 		// Update an existing entry.
 		try{
 			console.log("Update is called data", data);
+			console.log("update key", key);
+
+			var updatePrefix = `${this.prototype.constructor.name}_${key}`
+			console.log("147 add updatePrefix", updatePrefix);
+			
+
 			// Check to see if entry name changed.
 			if(data[this.constructor._key] && data[this.constructor._key] !== this[this.constructor._key]){
 
@@ -150,16 +156,25 @@ class Table{
 
 				// Remove the updated failed so it doesnt keep it
 				delete newData.updated;
+				// Loop through the data and Set redis HKEY
 
-				// Create a new record for the updated entry. If that succeeds,
-				// delete the old recored
-				let newObject = await this.constructor.add(newData);
-				console.log("newObject", newObject);
-
-				if(newObject){
-					await this.remove();
-					return newObject;
+				for(let each in data) {
+					await client.HSET(
+						redisPrefix(updatePrefix), // Key
+						each, // Field
+						data[each]   // value
+					);
 				}
+
+				// // Create a new record for the updated entry. If that succeeds,
+				// // delete the old recored
+				// let newObject = await this.constructor.add(newData);
+				// console.log("newObject", newObject);
+
+				// if(newObject){
+				// 	await this.remove();
+				// 	return newObject;
+				// }
 			}else{
 				// Update what ever fields that where passed.
 
