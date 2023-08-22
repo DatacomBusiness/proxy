@@ -9,7 +9,7 @@ client.connect()
 
 function redisPrefix(key){
 	// console.log("redisPrefix conf", conf);
-	console.log("redisPrefix key", key);
+	// console.log("redisPrefix key", key);
 	let response = `${conf.redis.prefix}${key}`
 	console.log("redisPrefix response", response);
 	return response;
@@ -23,21 +23,21 @@ class Table{
 	}
 
 	static async get(index){
+		console.log("********GET method called**********", index);
 		try{
-			console.log("get method called, index", index);
-			console.log("this.prototype.constructor.name", JSON.stringify(this.prototype.constructor.name));
+			// console.log("this.prototype.constructor.name", JSON.stringify(this.prototype.constructor.name));
 
 			if(typeof index === 'object'){
 				index = index[this._key];
 			}
 
 			var getPrefix = `${this.prototype.constructor.name}_${index}`
-			console.log("getPrefix", getPrefix);
+			// console.log("getPrefix", getPrefix);
 
 			let result = await client.HGETALL(
 				redisPrefix(getPrefix)
 			);
-			console.log("get result", result);
+			// console.log("get result", result);
 
 			if(!Object.keys(result).length){
 				let error = new Error('EntryNotFound');
@@ -94,6 +94,7 @@ class Table{
 
 	static async add(data){
 		// Add a entry to this redis table.
+		console.log("********Add method called**********");
 		try{
 			console.log("98 add data", data);
 			console.log("99 this.prototype.constructor",this.prototype.constructor);
@@ -139,6 +140,7 @@ class Table{
 	}
 
 	async update(data, key){
+		console.log("********Update method called**********");
 		// Update an existing entry.
 		try{
 			console.log("144Update is called data", data);
@@ -205,6 +207,7 @@ class Table{
 	}
 
 	async remove(data){
+		console.log("********Remove method called**********");
 		// Remove an entry from this table.
 
 		try{
