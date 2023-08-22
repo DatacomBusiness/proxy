@@ -8,6 +8,7 @@ const client = createClient({});
 client.connect()
 
 function redisPrefix(key){
+	console.log("conf", conf);
 	return `${conf.redis.prefix}${key}`;
 }
 
