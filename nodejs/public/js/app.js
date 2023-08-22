@@ -224,25 +224,30 @@ app.util = (function(app){
 		$target = options.$target || $('div.actionMessage');
 		message = message || '';
 
+		console.log("message", message);
+		console.log("$target.html()", $target.html());
+
 		if($target.html() === message) return;
 
 		if($target.html()){
-			console.log("element has HTML $target.html()", $target.html());
+			console.log("element has HTML", $target.html());
 			$target.slideUp('fast', function(){
 				$target.html('')
 				if(message) actionMessage(message, options);
 			})
 			return;
 		}else{
-			console.log("$target not has html",$target);
-			console.log("options", options);
+			console.log("$target has no html",$target);
+			// console.log("options", options);
 			if(options.type) $target.addClass('alert-' + options.type);
+			$target.html(message).slideDown('fast');
+
 			$target[0].style.display = "block"
 			setTimeout(() => {
 				$target[0].style.display = "none"
 			}, 10000);
-			$target.html(message).slideDown('fast');
 		}
+		$target.html("")
 	}
 
 	$.fn.serializeObject = function() {
