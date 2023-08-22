@@ -10,7 +10,9 @@ client.connect()
 function redisPrefix(key){
 	console.log("redisPrefix conf", conf);
 	console.log("redisPrefix key", key);
-	return `${conf.redis.prefix}_${key}`;
+	let response = `${conf.redis.prefix}_${key}`
+	console.log("response", response);
+	return response;
 }
 
 class Table{
@@ -23,17 +25,19 @@ class Table{
 	static async get(index){
 		try{
 			console.log("get method called, index", index);
-			console.log("Name prefix get", JSON.stringify(this.prototype.constructor.name));
+			console.log("this.prototype.constructor.name", JSON.stringify(this.prototype.constructor.name));
 
 			if(typeof index === 'object'){
 				index = index[this._key];
 			}
-			console.log("get index", index);
+
 			var getPrefix = `${this.prototype.constructor.name}_${index}`
+			console.log("getPrefix", getPrefix);
 
 			let result = await client.HGETALL(
 				redisPrefix(getPrefix)
 			);
+			console.log("result", result);
 
 			if(!Object.keys(result).length){
 				let error = new Error('EntryNotFound');
