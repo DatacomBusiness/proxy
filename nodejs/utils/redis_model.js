@@ -158,7 +158,7 @@ class Table{
 				console.log("this.constructor.name", this.constructor.name);
 				console.log("update conf.redis.prefix", conf.redis.prefix);
 				console.log('data["edit_host"]', data["edit_host"]);
-				onsole.log('data["edit_host"]', data.edit_host);
+				console.log('data["edit_host"]', data.edit_host);
 				// console.log("this[this.constructor._key", this[this.constructor._key]); // Old key
 				
 				let redisKey = redisPrefix(`${this.constructor.name}_${data["host"]}`)
