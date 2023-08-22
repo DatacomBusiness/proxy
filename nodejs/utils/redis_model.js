@@ -175,7 +175,7 @@ class Table{
 					await client.HSET(
 						redisKey, // Key
 						each, // Field
-						data[each]   // value
+						String(data[each])  // value
 					);
 				}
 				console.log("Completed updating record");
