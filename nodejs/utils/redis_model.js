@@ -73,9 +73,11 @@ class Table{
 		console.log("********List Method called**********");
 		// return a list of all the index keys for this table.
 		try{
-			return await client.SMEMBERS(
+			let listMembers = await client.SMEMBERS(
 				redisPrefix(this.prototype.constructor.name)
 			);
+			console.log("listMembers", listMembers);
+			return listMembers
 
 		}catch(error){
 			throw error;

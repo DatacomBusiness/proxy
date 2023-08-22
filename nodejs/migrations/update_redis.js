@@ -58,7 +58,7 @@ var safeList = [
 			}
 			console.log("exists", exists);
 
-			if(exists) {
+			if(!exists) {
 				await client.DEL(key)
 			}
 			

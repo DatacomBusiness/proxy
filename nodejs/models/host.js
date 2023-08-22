@@ -40,8 +40,9 @@ class Host extends Table{
 	async bustCache(parent){
 		console.log("********bustCache method called**********");
 		try{
+			console.log("parent", parent);
 			let cached = await Cached.listDetail();
-			console.log("cached", cached);
+			console.log("44 cached", cached);
 			for(let cache of cached){
 				if(cache.parent == parent){
 					console.log("cache", cache);
