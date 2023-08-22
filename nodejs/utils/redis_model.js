@@ -155,11 +155,13 @@ class Table{
 			if(data[this.constructor._key] && data[this.constructor._key] !== this[this.constructor._key]){
 				console.log("----151 update if executed ----");
 
-				console.log("this.constructor", this.constructor);
-				console.log("this[this.constructor._key", this[this.constructor._key]);
+				// console.log("this.constructor", this.constructor);
+				// console.log("this[this.constructor._key", this[this.constructor._key]);
 				
 				let redisKey = redisPrefix(updatePrefix)
-				// console.log("156 add updatePrefix", updatePrefix);
+				console.log("redisKey", redisKey);
+				var oldKey = redisPrefix(this[this.constructor._key])
+				console.log("oldKey, oldKey", oldKey);
 
 				// Merge the current data into with the updated data 
 				let newData = Object.assign({}, this, data);
@@ -169,7 +171,9 @@ class Table{
 
 				// Rename Key with new key
 
-				await client.RENAME(this[this.constructor._key], redisKey)
+				let renamed = await client.RENAME(oldKey, redisKey)
+				console.log("renamed", renamed);
+
 				// Loop through the data and Set redis HKEY
 				for(let each in data) {
 					console.log("each", each);
