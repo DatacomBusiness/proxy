@@ -39,6 +39,7 @@ var safeList = [
 				
 		for(let key of allKeys){
 			console.log("key", key);
+			let exists = false;
 			
 			// Find base domain, and see how many subdomains this key has
 			let parts = key.split(".");	let subDomainQty = parts.length -2; let arr = parts.slice(-2);	let domain = arr.join();
@@ -48,14 +49,15 @@ var safeList = [
 			}
 			
 			// If does not match or start with the safeList, then delete it
-			var exists = false;
+			
 			for(let safe of safeList) {
 				if (key.startsWith(safe) || key == safe) {
 					console.log("Key does start with safeWord");
 					exists = true
 				}
 			}
-			
+			console.log("exists", exists);
+
 			if(exists) {
 				await client.DEL(key)
 			}
