@@ -226,24 +226,34 @@ class Table{
 
 	async remove(data){
 		console.log("********Remove method called**********");
+		console.log("remove data", data);
 		// Remove an entry from this table.
 
 		try{
 			console.log("removing data for",this.constructor.name);
 			// Remove the index key from the tables members list.
+			let count
+			if(data) {
+				count = await client.DEL(
+					redisPrefix(`${this.constructor.name}_${data}`)
+				);
+			} else {
+				
+				await client.SREM(
+					redisPrefix(this.constructor.name),
+					this[this.constructor._key]
+				);
+	
+				// Remove the entries hash values.
+				count = await client.DEL(
+					redisPrefix(`${this.constructor.name}_${this[this.constructor._key]}`)
+				);
+	
+				// Return the number of removed values to the caller.
+				return count;
+			}
 
-			await client.SREM(
-				redisPrefix(this.constructor.name),
-				this[this.constructor._key]
-			);
-
-			// Remove the entries hash values.
-			let count = await client.DEL(
-				redisPrefix(`${this.constructor.name}_${this[this.constructor._key]}`)
-			);
-
-			// Return the number of removed values to the caller.
-			return count;
+			
 
 		} catch(error) {
 			throw error;

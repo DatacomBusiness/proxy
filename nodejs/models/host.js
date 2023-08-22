@@ -43,9 +43,11 @@ class Host extends Table{
 			let cached = await Cached.listDetail();
 			for(let cache of cached){
 				if(cache.parent == parent){
+					console.log("cache", cache);
 					let host = await Host.get(cache.host);
+					console.log("cached host", host);
 					await this.remove.apply(host);
-					await cache.remove();
+					await cache.remove("Cache");
 				}
 			}
 
@@ -80,6 +82,7 @@ class Host extends Table{
 	}
 
 	async remove(...args){
+		console.log("-------- Hostjs Remoove--------", ...args);
 		try{
 			let out = await super.remove(...args)
 			await Host.buildLookUpObj()
