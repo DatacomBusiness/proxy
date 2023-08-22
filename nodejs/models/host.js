@@ -22,6 +22,7 @@ class Host extends Table{
 	static __lookUpIsReady = false;
 
 	static async addCache(host, parentOBJ){
+		console.log("********addCache method called**********");
 		try{
 			await this.add({...parentOBJ, host, is_cache: true}, true).catch(err => {console.log("this.add err", JSON.stringify(err));})
 			await Cached.add({
@@ -37,6 +38,7 @@ class Host extends Table{
 	}
 
 	async bustCache(parent){
+		console.log("********bustCache method called**********");
 		try{
 			let cached = await Cached.listDetail();
 			for(let cache of cached){

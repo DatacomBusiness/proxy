@@ -120,10 +120,10 @@ class Table{
 			// Add the values for this entry.
 			for(let key of Object.keys(data)){
 				
-				console.log("data[this._key]", data[this._key]);
+				// console.log("data[this._key]", data[this._key]);
 
 				var updatePrefix = `${this.prototype.constructor.name}_${data[this._key]}`
-				console.log("125 add updatePrefix", updatePrefix);
+				// console.log("125 add updatePrefix", updatePrefix);
 
 				await client.HSET(
 					redisPrefix(updatePrefix), 
@@ -148,12 +148,14 @@ class Table{
 			
 			// Check to see if entry name changed.
 			if(data[this.constructor._key] && data[this.constructor._key] !== this[this.constructor._key]){
+				console.log("----151 update if executed ----");
 
 				console.log("this.constructor", this.constructor);
 				console.log("this[this.constructor._key", this[this.constructor._key]);
 
-				var updatePrefix = `${this.constructor.name}_${this[this.constructor._key]}`
-				console.log("156 add updatePrefix", updatePrefix);
+				let updatePrefix = `${this.constructor.name}_${this[this.constructor._key]}`
+				let redisKey = redisPrefix(updatePrefix)
+				// console.log("156 add updatePrefix", updatePrefix);
 
 				// Merge the current data into with the updated data 
 				let newData = Object.assign({}, this, data);
@@ -163,8 +165,11 @@ class Table{
 				// Loop through the data and Set redis HKEY
 
 				for(let each in data) {
+					console.log("each", each);
+					console.log("data[each]", data[each]);
+
 					await client.HSET(
-						redisPrefix(updatePrefix), // Key
+						redisKey, // Key
 						each, // Field
 						data[each]   // value
 					);
@@ -181,6 +186,7 @@ class Table{
 				// 	return newObject;
 				// }
 			}else{
+				console.log("----188 else executed ----");
 				// Update what ever fields that where passed.
 
 				// Validate the passed data, ignoring required fields.
