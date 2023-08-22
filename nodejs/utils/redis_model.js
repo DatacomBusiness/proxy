@@ -32,7 +32,7 @@ class Table{
 			}
 
 			var getPrefix = `${this.prototype.constructor.name}_${index}`
-			// console.log("getPrefix", getPrefix);
+			console.log("getPrefix", getPrefix);
 
 			let result = await client.HGETALL(
 				redisPrefix(getPrefix)
@@ -147,7 +147,7 @@ class Table{
 			// console.log("update key", key);
 
 			// Set variables
-			let updatePrefix = `${this.constructor.name}_${this[this.constructor._key]}`
+
 			// Validate the passed data, ignoring required fields.
 			data = objValidate.processKeys(this.constructor._keyMap, data, true);
 			
@@ -155,12 +155,13 @@ class Table{
 			if(data[this.constructor._key] && data[this.constructor._key] !== this[this.constructor._key]){
 				console.log("----151 update if executed ----");
 
-				console.log("this.constructor", this.constructor);
-				console.log("this[this.constructor._key", this[this.constructor._key]);
+				console.log("this.constructor.name", this.constructor.name);
+				console.log("update conf.redis.prefix", conf.redis.prefix);
+				// console.log("this[this.constructor._key", this[this.constructor._key]); // Old key
 				
 				let redisKey = redisPrefix(`${this.constructor.name}_${data["host"]}`)
-				console.log("redisKey", redisKey);
-				var oldKey = redisPrefix(updatePrefix)
+				console.log("redisKey", redisKey); // New key
+				var oldKey = redisPrefix(`${this.constructor.name}_${data["edit_host"]}`)
 				console.log("oldKey, oldKey", oldKey);
 
 				// Merge the current data into with the updated data 
