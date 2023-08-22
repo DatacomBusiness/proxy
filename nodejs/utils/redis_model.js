@@ -10,7 +10,7 @@ client.connect()
 function redisPrefix(key){
 	console.log("redisPrefix conf", conf);
 	console.log("redisPrefix key", key);
-	return `${conf.redis.prefix}${key}`;
+	return `${conf.redis.prefix}_${key}`;
 }
 
 class Table{
@@ -22,6 +22,7 @@ class Table{
 
 	static async get(index){
 		try{
+			console.log("get index", index);
 
 			if(typeof index === 'object'){
 				index = index[this._key];
@@ -108,8 +109,11 @@ class Table{
 
 			// Add the values for this entry.
 			for(let key of Object.keys(data)){
+				var updatePrefix = `${this.constructor.name}_${data[this._key]}`
+				console.log("add updatePrefix", updatePrefix);
+
 				await client.HSET(
-					redisPrefix(`${this.prototype.constructor.name}_${data[this._key]}`), 
+					redisPrefix(updatePrefix), 
 					key,
 					objValidate.parseToString(data[key])
 				);
@@ -153,8 +157,10 @@ class Table{
 				// Loop over the data fields and apply them to redis
 				for(let key of Object.keys(data)){
 					this[key] = data[key];
+					var updatePrefix = `${this.constructor.name}_${this[this.constructor._key]}`
+					console.log("update updatePrefix", updatePrefix);
 					await client.HSET(
-						redisPrefix(`${this.constructor.name}_${this[this.constructor._key]}`),
+						redisPrefix(updatePrefix),
 						key, String(data[key])
 					);
 				}
