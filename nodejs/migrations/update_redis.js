@@ -37,7 +37,7 @@ var safeList = [
 		let starHostLen = hosts.filter(itm => itm.includes("*")).length // I assume that the user would want 1 subdomain, then 2, then 3, etc. Not just 5.
 		console.log("starHostLen the total subdomains allowed", starHostLen);
 				
-		for(let key in allKeys){
+		for(let key of allKeys){
 			console.log("key", key);
 			
 			// Find base domain, and see how many subdomains this key has
