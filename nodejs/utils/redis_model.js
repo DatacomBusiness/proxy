@@ -96,7 +96,7 @@ class Table{
 		// Add a entry to this redis table.
 		try{
 			console.log("98 add data", data);
-			console.log("99 this.constructor",this.constructor);
+			console.log("99 this.prototype.constructor",this.prototype.constructor);
 			// Validate the passed data by the keyMap schema.
 			data = objValidate.processKeys(this._keyMap, data);
 
@@ -121,7 +121,7 @@ class Table{
 				
 				console.log("data[this._key]", data[this._key]);
 
-				var updatePrefix = `${this.constructor.name}_${data[this._key]}`
+				var updatePrefix = `${this.prototype.constructor.name}_${data[this._key]}`
 				console.log("add updatePrefix", updatePrefix);
 
 				await client.HSET(
