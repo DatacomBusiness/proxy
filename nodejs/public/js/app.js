@@ -234,8 +234,8 @@ app.util = (function(app){
 			return;
 		}else{
 			if(options.type) $target.addClass('alert-' + options.type);
-			$target.style.display = "inline"
 			console.log("$target",$target);
+			$target.style.display = "inline"
 			setTimeout(() => {
 				$target.style.display = "none"
 			}, 3000);
