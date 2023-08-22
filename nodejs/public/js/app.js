@@ -235,10 +235,10 @@ app.util = (function(app){
 		}else{
 			console.log("$target",$target);
 			if(options.type) $target.addClass('alert-' + options.type);
-			$target[0].style.display = "inline"
+			$target[0].style.display = "inline-flex"
 			setTimeout(() => {
 				$target[0].style.display = "none"
-			}, 3000);
+			}, 10000);
 			$target.html(message).slideDown('fast');
 		}
 	}
