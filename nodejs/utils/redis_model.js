@@ -10,7 +10,7 @@ client.connect()
 function redisPrefix(key){
 	console.log("redisPrefix conf", conf);
 	console.log("redisPrefix key", key);
-	let response = `${conf.redis.prefix}_${key}`
+	let response = `${conf.redis.prefix}${key}`
 	console.log("response", response);
 	return response;
 }
