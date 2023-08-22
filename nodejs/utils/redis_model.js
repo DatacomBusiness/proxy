@@ -191,9 +191,9 @@ class Table{
 				console.log("added", added);
 
 				// update Cache Set
-				let removedC = await client.SREM(`${conf.redis.prefix}_Cached`, oldHost)
+				let removedC = await client.SREM(`${conf.redis.prefix}Cached`, oldHost)
 				console.log("removedC", removedC);
-				let addedC = await client.SADD(`${conf.redis.prefix}_Cached`, data["host"])
+				let addedC = await client.SADD(`${conf.redis.prefix}Cached`, data["host"])
 				console.log("addedC", addedC);
 
 				// Set new Host
