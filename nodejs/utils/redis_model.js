@@ -9,7 +9,7 @@ client.connect()
 
 function redisPrefix(key){
 	// console.log("redisPrefix conf", conf);
-	// console.log("redisPrefix key", key);
+	console.log("redisPrefix key", key);
 	let response = `${conf.redis.prefix}${key}`
 	console.log("redisPrefix response", response);
 	return response;
@@ -95,6 +95,7 @@ class Table{
 	static async add(data){
 		// Add a entry to this redis table.
 		try{
+			console.log("98 add data", data);
 			// Validate the passed data by the keyMap schema.
 			data = objValidate.processKeys(this._keyMap, data);
 
@@ -116,6 +117,9 @@ class Table{
 
 			// Add the values for this entry.
 			for(let key of Object.keys(data)){
+				console.log("this.constructor.name",this.constructor.name);
+				console.log("data[this._key]", data[this._key]);
+
 				var updatePrefix = `${this.constructor.name}_${data[this._key]}`
 				console.log("add updatePrefix", updatePrefix);
 
