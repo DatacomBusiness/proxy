@@ -124,6 +124,7 @@ class Table{
 	async update(data, key){
 		// Update an existing entry.
 		try{
+			console.log("Update is called data", data);
 			// Check to see if entry name changed.
 			if(data[this.constructor._key] && data[this.constructor._key] !== this[this.constructor._key]){
 
@@ -136,6 +137,7 @@ class Table{
 				// Create a new record for the updated entry. If that succeeds,
 				// delete the old recored
 				let newObject = await this.constructor.add(newData);
+				console.log("newObject", newObject);
 
 				if(newObject){
 					await this.remove();
@@ -169,6 +171,7 @@ class Table{
 		// Remove an entry from this table.
 
 		try{
+			console.log("removing data for",this.constructor.name);
 			// Remove the index key from the tables members list.
 
 			await client.SREM(
