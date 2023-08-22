@@ -41,6 +41,7 @@ class Host extends Table{
 		console.log("********bustCache method called**********");
 		try{
 			let cached = await Cached.listDetail();
+			console.log("cached", cached);
 			for(let cache of cached){
 				if(cache.parent == parent){
 					console.log("cache", cache);

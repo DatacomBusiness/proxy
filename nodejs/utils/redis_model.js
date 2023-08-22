@@ -70,6 +70,7 @@ class Table{
 	}
 
 	static async list(){
+		console.log("********List Method called**********");
 		// return a list of all the index keys for this table.
 		try{
 			return await client.SMEMBERS(
@@ -82,6 +83,7 @@ class Table{
 	}
 
 	static async listDetail(){
+		console.log("********List Detail method called**********");
 		// Return a list of the entries as instances.
 		let out = [];
 
@@ -158,7 +160,7 @@ class Table{
 				console.log("this.constructor.name", this.constructor.name);
 				console.log("update conf.redis.prefix", conf.redis.prefix);
 				console.log('data["edit_host"]', data["edit_host"]);
-				console.log('data["edit_host"]', data.edit_host);
+				console.log('data["host"]', data["host"]);
 				// console.log("this[this.constructor._key", this[this.constructor._key]); // Old key
 				
 				let redisKey = redisPrefix(`${this.constructor.name}_${data["host"]}`)
@@ -177,9 +179,14 @@ class Table{
 				let renamed = await client.RENAME(oldKey, redisKey)
 				console.log("renamed", renamed);
 
+				let prefixlHost = `${conf.redis.prefix}${this.constructor.name}`
+				console.log("prefixlHost", prefixlHost);
+
 				// update Members Set
-				await client.SREM(`${conf.redis.prefix}${this.constructor.name}`, oldKey)
-				await client.SADD(`${conf.redis.prefix}${this.constructor.name}`, redisKey)
+				let removed = await client.SREM(`${conf.redis.prefix}${this.constructor.name}`, oldHost)
+				console.log("removed", removed);
+				let added = await client.SADD(`${conf.redis.prefix}${this.constructor.name}`, data["host"])
+				console.log("added", added);
 
 				// Loop through the data and Set redis HKEY
 				for(let each in data) {
@@ -216,7 +223,7 @@ class Table{
 						key, String(data[key])
 					);
 				}
-				console.log("Completed updating record");
+				console.log("Completed updating else record");
 			}
 
 			return this;
