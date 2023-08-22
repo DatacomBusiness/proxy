@@ -145,6 +145,11 @@ class Table{
 		try{
 			console.log("144Update is called data", data);
 			// console.log("update key", key);
+
+			// Set variables
+			let updatePrefix = `${this.constructor.name}_${this[this.constructor._key]}`
+			// Validate the passed data, ignoring required fields.
+			data = objValidate.processKeys(this.constructor._keyMap, data, true);
 			
 			// Check to see if entry name changed.
 			if(data[this.constructor._key] && data[this.constructor._key] !== this[this.constructor._key]){
@@ -152,8 +157,7 @@ class Table{
 
 				console.log("this.constructor", this.constructor);
 				console.log("this[this.constructor._key", this[this.constructor._key]);
-
-				let updatePrefix = `${this.constructor.name}_${this[this.constructor._key]}`
+				
 				let redisKey = redisPrefix(updatePrefix)
 				// console.log("156 add updatePrefix", updatePrefix);
 
@@ -188,20 +192,17 @@ class Table{
 			}else{
 				console.log("----188 else executed ----");
 				// Update what ever fields that where passed.
-
-				// Validate the passed data, ignoring required fields.
-				data = objValidate.processKeys(this.constructor._keyMap, data, true);
 				
 				// Loop over the data fields and apply them to redis
 				for(let key of Object.keys(data)){
 					this[key] = data[key];
-					var updatePrefix = `${this.constructor.name}_${this[this.constructor._key]}`
-					console.log("update updatePrefix", updatePrefix);
+					
 					await client.HSET(
 						redisPrefix(updatePrefix),
 						key, String(data[key])
 					);
 				}
+				console.log("Completed updating record");
 			}
 
 			return this;
