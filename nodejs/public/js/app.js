@@ -235,7 +235,7 @@ app.util = (function(app){
 		}else{
 			console.log("$target",$target);
 			if(options.type) $target.addClass('alert-' + options.type);
-			$target[0].style.display = "inline-flex"
+			$target[0].style.display = "inherit"
 			setTimeout(() => {
 				$target[0].style.display = "none"
 			}, 10000);
