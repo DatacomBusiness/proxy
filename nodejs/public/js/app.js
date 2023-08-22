@@ -227,7 +227,7 @@ app.util = (function(app){
 		if($target.html() === message) return;
 
 		if($target.html()){
-			console.log("element has HTML");
+			console.log("element has HTML $target.html()", $target.html());
 			$target.slideUp('fast', function(){
 				$target.html('')
 				if(message) actionMessage(message, options);
