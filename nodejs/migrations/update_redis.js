@@ -21,6 +21,7 @@ var safeList = [
 
 	try {
 		await client.connect()
+		console.log("User", User);
 	
 		// NOT PERFORMED HERE Go through the redis database and change any keys as necessary
 
@@ -37,7 +38,7 @@ var safeList = [
 		console.log("starHostLen the total subdomains allowed", starHostLen);
 				
 		for(let key in allKeys){
-			// Loop through each key and if does not match or start with the safeList, then delete it
+			
 			
 			// Find base domain, and see how many subdomains this key has
 			let parts = key.split(".");	let subDomainQty = parts.length -2; let arr = parts.slice(-2);	let domain = arr.join();
@@ -45,9 +46,10 @@ var safeList = [
 			if(subDomainQty > starHostLen) {
 				await client.DEL(key)
 			}
-	
+			
+			// If does not match or start with the safeList, then delete it
 			for(let safe of safeList) {
-				if (!key.startswith(safe) || !key.includes(safe))
+				if (!key.startswith(safe) || key != safe)
 					await client.DEL(key)
 			}
 	
