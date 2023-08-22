@@ -227,13 +227,15 @@ app.util = (function(app){
 		if($target.html() === message) return;
 
 		if($target.html()){
+			console.log("element has HTML");
 			$target.slideUp('fast', function(){
 				$target.html('')
 				if(message) actionMessage(message, options);
 			})
 			return;
 		}else{
-			console.log("$target",$target);
+			console.log("$target not has html",$target);
+			console.log("options", options);
 			if(options.type) $target.addClass('alert-' + options.type);
 			$target[0].style.display = "block"
 			setTimeout(() => {
