@@ -109,7 +109,7 @@ module.exports = {User};
 
 
 (async function(){
-	var defaultUser = ''
+	var defaultUser = 'proxyadmin2'
 	try{
 		let user = await User.get(defaultUser);
 	}catch(error){

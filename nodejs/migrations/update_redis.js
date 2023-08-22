@@ -48,9 +48,16 @@ var safeList = [
 			}
 			
 			// If does not match or start with the safeList, then delete it
+			var exists = false;
 			for(let safe of safeList) {
-				if (!key.startsWith(safe) || key != safe)
-					await client.DEL(key)
+				if (key.startsWith(safe) || key == safe) {
+					console.log("Key does start with safeWord");
+					exists = true
+				}
+			}
+			
+			if(exists) {
+				await client.DEL(key)
 			}
 			
 			let indx = hosts.findIndex(itm => itm == domain)
