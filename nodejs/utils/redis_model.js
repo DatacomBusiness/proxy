@@ -155,8 +155,8 @@ class Table{
 			if(data[this.constructor._key] && data[this.constructor._key] !== this[this.constructor._key]){
 				console.log("----151 update if executed ----");
 
-				// console.log("this.constructor", this.constructor);
-				// console.log("this[this.constructor._key", this[this.constructor._key]);
+				console.log("this.constructor", this.constructor);
+				console.log("this[this.constructor._key", this[this.constructor._key]);
 				
 				let redisKey = redisPrefix(`${this.constructor.name}_${data["host"]}`)
 				console.log("redisKey", redisKey);
@@ -173,6 +173,10 @@ class Table{
 
 				let renamed = await client.RENAME(oldKey, redisKey)
 				console.log("renamed", renamed);
+
+				// update Members Set
+				await client.SREM(`proxy_Host`, oldKey)
+				await client.SADD(`proxy_Host`, redisKey)
 
 				// Loop through the data and Set redis HKEY
 				for(let each in data) {
