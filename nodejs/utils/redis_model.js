@@ -145,7 +145,7 @@ class Table{
 		try{
 			console.log("146 Update is called data", data);
 			// console.log("update key", key);
-
+			let oldHost = JSON.parse(JSON.stringify(data['edit_host']))
 			// Set variables
 
 			// Validate the passed data, ignoring required fields.
@@ -163,7 +163,7 @@ class Table{
 				
 				let redisKey = redisPrefix(`${this.constructor.name}_${data["host"]}`)
 				console.log("redisKey", redisKey); // New key
-				var oldKey = redisPrefix(`${this.constructor.name}_${data.edit_host}`)
+				var oldKey = redisPrefix(`${this.constructor.name}_${oldHost}`)
 				console.log("oldKey, oldKey", oldKey);
 
 				// Merge the current data into with the updated data 
