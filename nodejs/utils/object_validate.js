@@ -19,13 +19,13 @@ function processKeys(map, data, partial){
 	let errors = [];
 	let out = {};
 
-	console.log("processKeys data1", data);
+	// console.log("processKeys data1", data);
 
 	data["targetPort"] = Number(data["targetPort"])
 	data["targetssl"] = Boolean(data["targetssl"])
 	data["forcessl"] = Boolean(data["forcessl"])
 	
-	console.log("processKeys data2", data);
+	// console.log("processKeys data2", data);
 
 	for(let key of Object.keys(map)){
 
