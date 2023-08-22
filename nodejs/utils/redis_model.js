@@ -23,6 +23,7 @@ class Table{
 	static async get(index){
 		try{
 			console.log("get index", index);
+			console.log("Name prefix get", `${this.prototype.constructor.name}_${index}`);
 
 			if(typeof index === 'object'){
 				index = index[this._key];
