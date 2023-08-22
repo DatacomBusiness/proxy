@@ -23,11 +23,12 @@ class Table{
 	static async get(index){
 		try{
 			console.log("get index", index);
-			console.log("Name prefix get", this.prototype.constructor.name+"_"+index, );
+			console.log("Name prefix get", JSON.stringify(this.prototype.constructor.name));
 
 			if(typeof index === 'object'){
 				index = index[this._key];
 			}
+			console.log("get index", index);
 
 			let result = await client.HGETALL(
 				redisPrefix(`${this.prototype.constructor.name}_${index}`)
