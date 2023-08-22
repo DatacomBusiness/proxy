@@ -143,8 +143,9 @@ class Table{
 		try{
 			console.log("Update is called data", data);
 			console.log("update key", key);
+			console.log("this.constructor", this.constructor);
 
-			var updatePrefix = `${this.prototype.constructor.name}_${key}`
+			var updatePrefix = `${this.constructor.name}_${key}`
 			console.log("147 add updatePrefix", updatePrefix);
 			
 
