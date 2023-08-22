@@ -37,9 +37,9 @@ class Table{
 			let result = await client.HGETALL(
 				redisPrefix(getPrefix)
 			);
-			// console.log("get result", result);
+			console.log("get result", result);
 
-			if(!Object.keys(result).length){
+			if(!Object.keys(result).length && this.prototype.constructor.name != "Cached"){
 				let error = new Error('EntryNotFound');
 				error.name = 'EntryNotFound';
 				error.message = `${this.prototype.constructor.name}:${index} does not exists`;
