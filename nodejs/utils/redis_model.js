@@ -224,7 +224,7 @@ class Table{
 				// 	return newObject;
 				// }
 			}else{
-				console.log("----205 else executed ----");
+				console.log("----227 else executed ----");
 				// Update what ever fields that where passed.
 				
 				// Loop over the data fields and apply them to redis
@@ -249,7 +249,7 @@ class Table{
 
 	async remove(data){
 		console.log("********Remove method called**********");
-		console.log("remove data", data);
+		console.log("remove data", data); // undefined
 		// Remove an entry from this table.
 
 		try{
