@@ -15,7 +15,7 @@ var safeList = [
 	"proxy_Host",
 	"token_auth"
 ];
-console.log("safeList", safeLIst);
+console.log("safeList", safeList);
 
 (async function(){
 
