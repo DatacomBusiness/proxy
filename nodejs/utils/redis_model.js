@@ -141,16 +141,17 @@ class Table{
 	async update(data, key){
 		// Update an existing entry.
 		try{
-			console.log("Update is called data", data);
-			console.log("update key", key);
-			console.log("this.constructor", this.constructor);
-
-			var updatePrefix = `${this.constructor.name}_${key}`
-			console.log("147 add updatePrefix", updatePrefix);
+			console.log("144Update is called data", data);
+			// console.log("update key", key);
 			
-
 			// Check to see if entry name changed.
 			if(data[this.constructor._key] && data[this.constructor._key] !== this[this.constructor._key]){
+
+				console.log("this.constructor", this.constructor);
+				console.log("this[this.constructor._key", this[this.constructor._key]);
+
+				var updatePrefix = `${this.constructor.name}_${this[this.constructor._key]}`
+				console.log("156 add updatePrefix", updatePrefix);
 
 				// Merge the current data into with the updated data 
 				let newData = Object.assign({}, this, data);
@@ -166,6 +167,7 @@ class Table{
 						data[each]   // value
 					);
 				}
+				console.log("Completed updating record");
 
 				// // Create a new record for the updated entry. If that succeeds,
 				// // delete the old recored
