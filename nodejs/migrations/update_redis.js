@@ -1,6 +1,6 @@
 'use strict';
 
-const User = require("../models/user_redis")
+const User = require("../models/user_redis");
 
 const {createClient} = require('redis');
 
@@ -13,9 +13,9 @@ var safeList = [
 	"proxy_host",
 	"proxy_User",
 	"proxy_Host",
-	// "proxy_Cached",
 	"token_auth"
-]
+];
+console.log("safeList", safeLIst);
 
 (async function(){
 
