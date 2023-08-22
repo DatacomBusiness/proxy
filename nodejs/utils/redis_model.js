@@ -166,8 +166,11 @@ class Table{
 
 				// Remove the updated failed so it doesnt keep it
 				delete newData.updated;
-				// Loop through the data and Set redis HKEY
 
+				// Rename Key with new key
+
+				await client.RENAME(this[this.constructor._key], redisKey)
+				// Loop through the data and Set redis HKEY
 				for(let each in data) {
 					console.log("each", each);
 					console.log("data[each]", data[each]);
