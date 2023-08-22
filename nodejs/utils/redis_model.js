@@ -143,7 +143,7 @@ class Table{
 		console.log("********Update method called**********");
 		// Update an existing entry.
 		try{
-			console.log("144Update is called data", data);
+			console.log("146 Update is called data", data);
 			// console.log("update key", key);
 
 			// Set variables
@@ -157,11 +157,13 @@ class Table{
 
 				console.log("this.constructor.name", this.constructor.name);
 				console.log("update conf.redis.prefix", conf.redis.prefix);
+				console.log('data["edit_host"]', data["edit_host"]);
+				onsole.log('data["edit_host"]', data.edit_host);
 				// console.log("this[this.constructor._key", this[this.constructor._key]); // Old key
 				
 				let redisKey = redisPrefix(`${this.constructor.name}_${data["host"]}`)
 				console.log("redisKey", redisKey); // New key
-				var oldKey = redisPrefix(`${this.constructor.name}_${data["edit_host"]}`)
+				var oldKey = redisPrefix(`${this.constructor.name}_${data.edit_host}`)
 				console.log("oldKey, oldKey", oldKey);
 
 				// Merge the current data into with the updated data 
@@ -176,8 +178,8 @@ class Table{
 				console.log("renamed", renamed);
 
 				// update Members Set
-				await client.SREM(`proxy_Host`, oldKey)
-				await client.SADD(`proxy_Host`, redisKey)
+				await client.SREM(`${conf.redis.prefix}${this.constructor.name}`, oldKey)
+				await client.SADD(`${conf.redis.prefix}${this.constructor.name}`, redisKey)
 
 				// Loop through the data and Set redis HKEY
 				for(let each in data) {
@@ -202,7 +204,7 @@ class Table{
 				// 	return newObject;
 				// }
 			}else{
-				console.log("----188 else executed ----");
+				console.log("----205 else executed ----");
 				// Update what ever fields that where passed.
 				
 				// Loop over the data fields and apply them to redis
@@ -210,7 +212,7 @@ class Table{
 					this[key] = data[key];
 					
 					await client.HSET(
-						redisPrefix(updatePrefix),
+						redisPrefix(`${this.constructor.name}_${data["host"]}`),
 						key, String(data[key])
 					);
 				}
