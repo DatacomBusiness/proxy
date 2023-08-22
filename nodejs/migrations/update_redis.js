@@ -15,13 +15,12 @@ var safeList = [
 	"proxy_Host",
 	"token_auth"
 ];
-console.log("safeList", safeList);
 
 (async function(){
 
 	try {
 		await client.connect()
-		console.log("User", User);
+		// console.log("User", User);
 	
 		// NOT PERFORMED HERE Go through the redis database and change any keys as necessary
 
@@ -29,6 +28,7 @@ console.log("safeList", safeList);
 	
 		// Loop thru SMEMBERS and make delete all Keys that are not associated with the domains
 		let allKeys = await client.KEYS("*")
+		console.log("allKeys", allKeys);
 		// Get list of hosts
 		let hosts = await client.SMEMBERS('proxy_Host');
 		console.log("hosts", hosts);
@@ -38,7 +38,7 @@ console.log("safeList", safeList);
 		console.log("starHostLen the total subdomains allowed", starHostLen);
 				
 		for(let key in allKeys){
-			
+			console.log("key", key);
 			
 			// Find base domain, and see how many subdomains this key has
 			let parts = key.split(".");	let subDomainQty = parts.length -2; let arr = parts.slice(-2);	let domain = arr.join();
@@ -49,7 +49,7 @@ console.log("safeList", safeList);
 			
 			// If does not match or start with the safeList, then delete it
 			for(let safe of safeList) {
-				if (!key.startswith(safe) || key != safe)
+				if (!key.startsWith(safe) || key != safe)
 					await client.DEL(key)
 			}
 	
