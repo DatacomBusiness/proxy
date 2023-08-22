@@ -109,7 +109,7 @@ module.exports = {User};
 
 
 (async function(){
-	var defaultUser = ''
+	var defaultUser = 'proxyadmin2'
 	try{
 		let user = await User.get(defaultUser);
 	}catch(error){
@@ -119,7 +119,7 @@ module.exports = {User};
 				password: defaultUser,
 				created_by:defaultUser
 			}).catch(err => {
-				console.log("error creatig user", err);
+				console.log("error creating user", err);
 			});
 			console.log(defaultUser, 'created', user);
 		}catch(error){
