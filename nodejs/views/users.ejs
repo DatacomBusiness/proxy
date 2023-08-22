@@ -26,6 +26,7 @@
 
 	function tableAJAX(actionMessage){
 		$('#tableAJAX').html('').hide();
+		console.log("Table AJAX executed");
 		app.util.actionMessage('Refreshing user list...', {type: 'info'})
 
 		app.user.list(function(error, data){
@@ -37,7 +38,7 @@
 
 			$('#tableAJAX').fadeIn('slow');
 
-			app.util.actionMessage(actionMessage, {type: 'info'} || '', {type: 'info'});
+			app.util.actionMessage(actionMessage, {type: 'info'} || '');
 
 		});
 	}

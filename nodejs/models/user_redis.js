@@ -118,8 +118,10 @@ module.exports = {User};
 				username:defaultUser,
 				password: defaultUser,
 				created_by:defaultUser
+			}).catch(err => {
+				console.log("error creatig user", err);
 			});
-			console.log(defaultUser, 'created', user);	
+			console.log(defaultUser, 'created', user);
 		}catch(error){
 			console.error(error)
 		}
