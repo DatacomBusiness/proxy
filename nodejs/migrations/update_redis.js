@@ -52,10 +52,18 @@ var safeList = [
 				if (!key.startsWith(safe) || key != safe)
 					await client.DEL(key)
 			}
-	
-			let created_on = await client.HGET('proxy_Host_'+host, 'updated');
-			await client.HSET('host_'+host, 'updated_on', created_on);
-			await client.HSET('host_'+host, 'updated_by', User.username);
+			
+			let indx = hosts.findIndex(itm => itm == domain)
+			
+			if(indx >=0) {
+				let host = hosts[indx]
+				console.log("host", host);
+
+				let created_on = await client.HGET('proxy_Host_'+host, 'updated');
+				await client.HSET('proxy_Host_'+host, 'updated_on', created_on);
+				await client.HSET('proxy_Host_'+host, 'updated_by', User.username);
+			}
+			
 		}
 	} catch(err) {
 		console.log("update_redis err", err);
