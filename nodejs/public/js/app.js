@@ -247,7 +247,7 @@ app.util = (function(app){
 				$target[0].style.display = "none"
 			}, 10000);
 		}
-		$target.html("")
+
 	}
 
 	$.fn.serializeObject = function() {
