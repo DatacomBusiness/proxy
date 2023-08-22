@@ -86,7 +86,7 @@ class User extends Table{
 			let user = await User.get(data);
 
 			console.log('login user.password', user.password)
-			onsole.log('login data.password', data.password)
+			console.log('login data.password', data.password)
 			let auth = await bcrypt.compare(data.password, user.password).catch(err => console.log("bcrypt err", err));
 			console.log("bcrypt auth", auth);
 
