@@ -71,7 +71,7 @@ var safeList = [ // Handles all keys other then the Host keys
 
 			if(!exists) {
 				// await client.DEL(key)
-				console.log("!exists await clinet.DEL(key)");
+				console.log("!exists await client.DEL(key)");
 			}
 
 			// Just for record keeping

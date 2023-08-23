@@ -168,12 +168,12 @@ class Host extends Table{
 			console.log("host.startsWith(super.redisPrefix(this.prototype.constructor.name))", host.startsWith(super.redisPrefix(this.prototype.constructor.name)));
 	
 			// if the host does not start with proxy_Host_, then return undefined
-			if(!host.startsWith(super.redisPrefix(this.prototype.constructor.name))) resolve({"Not a Valid Host Record": host})
-			else if(host == super.redisPrefix(this.prototype.constructor.name)) resolve({"Not a Valid Host Record": host})
+			if(host.startsWith(super.redisPrefix(this.prototype.constructor.name)) == false) resolve({"Not a Valid Host Record on startsWith": host})
+			else if(host == super.redisPrefix(this.prototype.constructor.name)) resolve({"Not a Valid Host Record on proxy_Host": host})
 			
 			host = host.split(`${super.redisPrefix(this.prototype.constructor.name)}_`)[1]
 			console.log("Host is split on prefix", host);
-			if(!host) resolve({"Not a Valid Host Record": host})
+			if(!host) resolve({"Not a Valid Host Record on split": host})
 	
 			// Hold the last passed long wild card.
 			let last_resort = {};
