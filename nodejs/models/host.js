@@ -1,6 +1,15 @@
 'use strict';
 
 const Table = require('../utils/redis_model');
+const conf = require('../conf/conf');
+
+function redisPrefix(key){
+	// console.log("redisPrefix conf", conf);
+	// console.log("redisPrefix key", key);
+	let response = `${conf.redis.prefix}${key}`
+	console.log("redisPrefix response", response);
+	return response;
+}
 
 class Host extends Table{
 	static _key = 'host';
@@ -163,15 +172,15 @@ class Host extends Table{
 			console.log("this.lookUpObj", this.lookUpObj);
 	
 			// Get Host Prefix
-			console.log("this.super.redisPrefix(this.prototype.constructor.name))", super.redisPrefix(this.prototype.constructor.name)); // works
-			console.log("host.startsWith(super.redisPrefix(this.prototype.constructor.name))", host.startsWith(super.redisPrefix(this.prototype.constructor.name)));
+			console.log("this.super.redisPrefix(this.prototype.constructor.name))", redisPrefix(this.prototype.constructor.name)); // works
+			console.log("host.startsWith(redisPrefix(this.prototype.constructor.name))", host.startsWith(redisPrefix(this.prototype.constructor.name)));
 	
 			// if the host does not start with proxy_Host_, then return undefined
 			if(host.endsWith(":latest")) resolve({"Valid": true, "host": host})
-			else if(host == super.redisPrefix(this.prototype.constructor.name)) resolve({"Valid": true, "host": host})
-			else if(host.startsWith(super.redisPrefix(this.prototype.constructor.name)) == false) resolve({"Valid": false, "host": host, "caught_by": "startsWith"})
+			else if(host == redisPrefix(this.prototype.constructor.name)) resolve({"Valid": true, "host": host})
+			else if(host.startsWith(redisPrefix(this.prototype.constructor.name)) == false) resolve({"Valid": false, "host": host, "caught_by": "startsWith"})
 			
-			host = host.split(`${super.redisPrefix(this.prototype.constructor.name)}_`)[1]
+			host = host.split(`${redisPrefix(this.prototype.constructor.name)}_`)[1]
 			if(!host) resolve({"Valid": false, "host": host, "caught_by": "split"})
 	
 			// Hold the last passed long wild card.

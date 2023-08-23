@@ -7,6 +7,14 @@ const conf = require('../conf/conf');
 const client = createClient({});
 client.connect()
 
+function redisPrefix(key){
+	// console.log("redisPrefix conf", conf);
+	// console.log("redisPrefix key", key);
+	let response = `${conf.redis.prefix}${key}`
+	console.log("redisPrefix response", response);
+	return response;
+}
+
 class Table{
 	constructor(data){
 		for(let key in data){
@@ -14,39 +22,25 @@ class Table{
 		}
 	}
 
-	redisPrefix(key){
-		console.log("redisPrefix conf", conf);
-		console.log("redisPrefix key", key);
-		let response = `${conf.redis.prefix}${key}`
-		console.log("redisPrefix response", response);
-		return response;
-	}
-
-
 	static async get(index){
 		console.log("********GET method called**********", index);
-		
 		try{
-			console.log("super", super.prototype);
+			// console.log("this.prototype.constructor.name", JSON.stringify(this.prototype.constructor.name));
 			console.log("this", this);
 			console.log("this[this.prototype]", this[this.prototype]);
-			console.log("this.prototype", JSON.stringify(this.prototype));
-			console.log("Table", JSON.stringify(Table));
-			console.log("Table.prototype", Table.prototype);
 
-			// console.log("this.prototype.constructor.name", JSON.stringify(this.prototype.constructor.name));
 
 			if(typeof index === 'object'){
 				index = index[this._key];
 			}
 
 			var getPrefix = `${this.prototype.constructor.name}_${index}`
-			// console.log("getPrefix", getPrefix);
+			console.log("getPrefix", getPrefix);
 
 			let result = await client.HGETALL(
-				this.redisPrefix(getPrefix)
+				redisPrefix(getPrefix)
 			);
-			// console.log("get result", result);
+			console.log("get result", result);
 
 			if(!Object.keys(result).length && this.prototype.constructor.name != "Cached"){
 				let error = new Error('EntryNotFound');
@@ -65,6 +59,7 @@ class Table{
 		}catch(error){
 			throw error;
 		}
+
 	}
 
 	static async exists(index){
@@ -82,7 +77,7 @@ class Table{
 		// return a list of all the index keys for this table.
 		try{
 			let listMembers = await client.SMEMBERS(
-				this.redisPrefix(this.prototype.constructor.name)
+				redisPrefix(this.prototype.constructor.name)
 			);
 			console.log("listMembers", listMembers);
 			return listMembers
@@ -125,7 +120,7 @@ class Table{
 
 			// Add the key to the members for this redis table
 			await client.SADD(
-				this.redisPrefix(this.prototype.constructor.name),
+				redisPrefix(this.prototype.constructor.name),
 				data[this._key]
 			);
 
@@ -138,7 +133,7 @@ class Table{
 				// console.log("125 add updatePrefix", updatePrefix);
 
 				await client.HSET(
-					this.redisPrefix(updatePrefix), 
+					redisPrefix(updatePrefix), 
 					key,
 					objValidate.parseToString(data[key])
 				);
@@ -173,9 +168,9 @@ class Table{
 				console.log('data["host"]', data["host"]);
 				// console.log("this[this.constructor._key", this[this.constructor._key]); // Old key
 				
-				let redisKey = this.redisPrefix(`${this.constructor.name}_${data["host"]}`)
+				let redisKey = redisPrefix(`${this.constructor.name}_${data["host"]}`)
 				console.log("redisKey", redisKey); // New key
-				var oldKey = this.redisPrefix(`${this.constructor.name}_${oldHost}`)
+				var oldKey = redisPrefix(`${this.constructor.name}_${oldHost}`)
 				console.log("oldKey, oldKey", oldKey);
 
 				// Merge the current data into with the updated data 
@@ -240,7 +235,7 @@ class Table{
 					this[key] = data[key];
 					
 					await client.HSET(
-						this.redisPrefix(`${this.constructor.name}_${data["host"]}`),
+						redisPrefix(`${this.constructor.name}_${data["host"]}`),
 						key, String(data[key])
 					);
 				}
@@ -256,33 +251,28 @@ class Table{
 	}
 
 	async remove(data){
-		console.log("********Remove method called**********", data);
+		console.log("********Remove method called**********");
 		console.log("remove data", data); // undefined
-		console.log("this.constructor", this.constructor);
-		console.log("this", this);
-		console.log("Object.getOwnPropertyNames(this)", Object.getOwnPropertyNames(this));
-
-		console.log("this.super.redisPrefix(this.prototype.constructor.name))", this.redisPrefix("Host")); 
 		// Remove an entry from this table.
 
 		try{
-			console.log("remove this.constructor.name", this.constructor.name);
+			console.log("removing data for",this.constructor.name);
 			// Remove the index key from the tables members list.
 			let count
 			if(data) {
 				count = await client.DEL(
-					this.redisPrefix(`${this.constructor.name}_${data}`)
+					redisPrefix(`${this.constructor.name}_${data}`)
 				);
 			} else {
 				
 				await client.SREM(
-					this.redisPrefix(this.constructor.name),
+					redisPrefix(this.constructor.name),
 					this[this.constructor._key]
 				);
 	
 				// Remove the entries hash values.
 				count = await client.DEL(
-					this.redisPrefix(`${this.constructor.name}_${this[this.constructor._key]}`)
+					redisPrefix(`${this.constructor.name}_${this[this.constructor._key]}`)
 				);
 	
 				// Return the number of removed values to the caller.
