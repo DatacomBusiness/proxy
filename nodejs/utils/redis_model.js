@@ -14,7 +14,7 @@ class Table{
 		}
 	}
 
-	static redisPrefix(key){
+	redisPrefix(key){
 		// console.log("redisPrefix conf", conf);
 		// console.log("redisPrefix key", key);
 		let response = `${conf.redis.prefix}${key}`
@@ -254,7 +254,7 @@ class Table{
 		console.log("this", this);
 		console.log("Object.getOwnPropertyNames(this)", Object.getOwnPropertyNames(this));
 
-		console.log("this.super.redisPrefix(this.prototype.constructor.name))", this[super.redisPrefix("Host")]); 
+		console.log("this.super.redisPrefix(this.prototype.constructor.name))", this.redisPrefix("Host")); 
 		// Remove an entry from this table.
 
 		try{
