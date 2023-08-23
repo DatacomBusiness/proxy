@@ -59,7 +59,7 @@ var safeList = [ // Handles all keys other then the Host keys
 					console.log("lookUpKey", lookUpKey);
 
 					if(lookUpKey["Not a Valid Host Record"]) {
-						console.log("lookUpKey is undefined");
+						console.log("lookUpKey: Key doesnt exist");
 						exists = false
 					} 
 				}

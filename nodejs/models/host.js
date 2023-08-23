@@ -168,7 +168,8 @@ class Host extends Table{
 			console.log("host.startsWith(super.redisPrefix(this.prototype.constructor.name))", host.startsWith(super.redisPrefix(this.prototype.constructor.name)));
 	
 			// if the host does not start with proxy_Host_, then return undefined
-			if(!host.startsWith(super.redisPrefix(this.prototype.constructor.name))) resolve({"Not a Valid Host Record": host});
+			if(!host.startsWith(super.redisPrefix(this.prototype.constructor.name))) resolve({"Not a Valid Host Record": host})
+			else if(host == super.redisPrefix(this.prototype.constructor.name)) resolve({"Not a Valid Host Record": host})
 			
 			host = host.split(`${super.redisPrefix(this.prototype.constructor.name)}_`)[1]
 			console.log("Host is split on prefix", host);
