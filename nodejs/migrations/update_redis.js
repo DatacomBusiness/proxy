@@ -1,14 +1,17 @@
 'use strict';
 
+// Use this file to clean up your redis keys.
+
 const User = require("../models/user_redis");
 
 const {createClient} = require('redis');
 
 const client = createClient({});
 
+const {Host} = require("../models/host")
+console.log("Host", Host);
+
 var safeList = [
-	"auth",
-	"user", 
 	"proxy_AuthToken",
 	"proxy_host",
 	"proxy_User",
@@ -41,27 +44,37 @@ var safeList = [
 			console.log("key", key);
 			let exists = false;
 			
-			// Find base domain, and see how many subdomains this key has
-			let parts = key.split(".");	let subDomainQty = parts.length -2; let arr = parts.slice(-2);	let domain = arr.join();
-			// If subDomainQty is greater than starLenHost, then delete the keys that have more 
-			if(subDomainQty > starHostLen) {
-				await client.DEL(key)
-			}
-			
+						// // Find base domain, and see how many subdomains this key has
+						// let parts = key.split(".");	let subDomainQty = parts.length -2; let arr = parts.slice(-2);	let domain = arr.join();
+						// // If subDomainQty is greater than starLenHost, then delete the keys that have more 
+						// if(subDomainQty > starHostLen) {
+						// 	// await client.DEL(key)
+						// 	console.log("await clinet.DEL(key)");
+						// }
+						
 			// If does not match or start with the safeList, then delete it
 			
 			for(let safe of safeList) {
 				if (key.startsWith(safe) || key == safe) {
-					console.log("Key does start with safeWord");
+					console.log("Key: ", key, "does start with safeWord: ", safe);
+					
+					// Call lookup function to see if it exists first
+
 					exists = true
 				}
 			}
 			console.log("exists", exists);
 
 			if(!exists) {
-				await client.DEL(key)
+				// await client.DEL(key)
+				console.log("!exists await clinet.DEL(key)");
 			}
-			
+
+			// Do a lookup
+			let lookUpKey = Host.lookUp(key)
+			console.log("lookUpKey", lookUpKey);
+
+			// Just for record keeping
 			let indx = hosts.findIndex(itm => itm == domain)
 			
 			if(indx >=0) {

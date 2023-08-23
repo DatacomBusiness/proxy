@@ -149,7 +149,6 @@ class Host extends Table{
 		Perform a complex lookup of @host on the look up tree.
 		*/
 
-
 		// Hold a pointer to the root of the look up tree
 		let place = this.lookUpObj;
 
@@ -157,7 +156,9 @@ class Host extends Table{
 		let last_resort = {};
 
 		// Walk over each fragment of the host, from right to left
+		console.log("host.split('.').reverse()", host.split('.').reverse());
 		for(let fragment of host.split('.').reverse()){
+			console.log("fragment", fragment);
 
 			// If a long wild card is found on this level, hold on to it
 			if(place['**']) last_resort = place['**'];
@@ -173,6 +174,8 @@ class Host extends Table{
 			}else if(last_resort){
 				place = last_resort;
 			}
+			console.log("place", place);
+			console.log("last_resort", last_resort);
 		}
 
 		// After the tree has been traversed, see if we have leaf node to return. 
