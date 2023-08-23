@@ -14,7 +14,7 @@ class Table{
 		}
 	}
 
-	static redisPrefix(key){
+	redisPrefix(key){
 		// console.log("redisPrefix conf", conf);
 		// console.log("redisPrefix key", key);
 		let response = `${conf.redis.prefix}${key}`
@@ -248,12 +248,12 @@ class Table{
 	}
 
 	async remove(data){
-		console.log("********Remove method called**********");
+		console.log("********Remove method called**********", data);
 		console.log("remove data", data); // undefined
 		// Remove an entry from this table.
 
 		try{
-			console.log("removing data for",this.constructor.name);
+			console.log("removing data for", this.constructor.name);
 			// Remove the index key from the tables members list.
 			let count
 			if(data) {
