@@ -142,8 +142,7 @@ class Host extends Table{
 
 				// When the look up tree is finished, remove the ready hold.
 				this.__lookUpIsReady = true;
-				console.log("Final this.lookUpObj", this.lookUpObj);
-				resolve("Tree is built")
+				resolve("************************* Tree is built *************************")
 
 			}catch(error){
 				console.error(error);
@@ -154,7 +153,7 @@ class Host extends Table{
 
 	static lookUp(host){
 		return new Promise((resolve, reject) => {
-			console.log("********************* Peforming Host.lookUp Now **************************");
+			console.log("*************** Peforming Host.lookUp Now ***************", host);
 			/*
 			Perform a complex lookup of @host on the look up tree.
 			*/
@@ -168,12 +167,12 @@ class Host extends Table{
 			console.log("host.startsWith(super.redisPrefix(this.prototype.constructor.name))", host.startsWith(super.redisPrefix(this.prototype.constructor.name)));
 	
 			// if the host does not start with proxy_Host_, then return undefined
-			if(host.startsWith(super.redisPrefix(this.prototype.constructor.name)) == false) resolve({"Not a Valid Host Record on startsWith": host})
-			else if(host == super.redisPrefix(this.prototype.constructor.name)) resolve({"Not a Valid Host Record on proxy_Host": host})
+			if(host.endsWith(":latest")) resolve({"Valid": true, "host": host}) 
+			else if(host.startsWith(super.redisPrefix(this.prototype.constructor.name)) == false) resolve({"Valid": false, "host": host, "caught_by": "startsWith"})
+			else if(host == super.redisPrefix(this.prototype.constructor.name)) resolve({"Valid": false, "host": host, "caught_by": "proxy_Host"})
 			
 			host = host.split(`${super.redisPrefix(this.prototype.constructor.name)}_`)[1]
-			console.log("Host is split on prefix", host);
-			if(!host) resolve({"Not a Valid Host Record on split": host})
+			if(!host) resolve({"Valid": false, "host": host, "caught_by": "split"})
 	
 			// Hold the last passed long wild card.
 			let last_resort = {};
@@ -203,7 +202,7 @@ class Host extends Table{
 				}
 			}
 	
-				console.log("returning place['#record'];", place['#record']);
+				// console.log("returning place['#record'];", place['#record']);
 			// After the tree has been traversed, see if we have leaf node to return. 
 			if(place && place['#record']) resolve(place['#record']);
 		}).catch(err => {
