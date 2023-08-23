@@ -27,6 +27,7 @@ class Table{
 		console.log("********GET method called**********", index);
 		
 		try{
+			console.log("super", super);
 			console.log("this", this);
 			console.log("this[this.prototype]", this[this.prototype]);
 			console.log("this.prototype", JSON.stringify(this.prototype));
