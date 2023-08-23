@@ -44,7 +44,7 @@ var safeList = [ // Handles all keys other then the Host keys
 		// console.log("starHostLen the total subdomains allowed", starHostLen);
 				
 		for(let key of allKeys){
-			console.log("\n update_redis key", key);
+			console.log("\nupdate_redis key", key);
 			let exists = false;
 			
 						// // Find base domain, and see how many subdomains this key has

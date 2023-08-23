@@ -169,7 +169,7 @@ class Host extends Table{
 			// if the host does not start with proxy_Host_, then return undefined
 			if(!host.startsWith(super.redisPrefix(this.prototype.constructor.name))) {
 				console.log("Not a valid Host record");
-				return "No Valid Host Record"
+				resolve("No Valid Host Record")
 			} else {
 				host = host.split(`${super.redisPrefix(this.prototype.constructor.name)}_`)[1]
 				console.log("Host is split on prefix", host);
