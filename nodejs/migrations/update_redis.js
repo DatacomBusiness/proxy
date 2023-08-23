@@ -9,7 +9,8 @@ const {createClient} = require('redis');
 const client = createClient({});
 
 const {Host} = require("../models/host")
-console.log("Host", Host);
+console.log("**************** update_host.js ****************");
+// console.log("Host", Host);
 
 var safeList = [
 	"proxy_AuthToken",
@@ -33,15 +34,15 @@ var safeList = [
 		let allKeys = await client.KEYS("*")
 		console.log("allKeys", allKeys);
 		// Get list of hosts
-		let hosts = await client.SMEMBERS('proxy_Host');
-		console.log("hosts", hosts);
+		// let hosts = await client.SMEMBERS('proxy_Host');
+		// console.log("hosts", hosts);
 
-		// Find the SMEMBERS that contain *., *.*, etc and allow those domains with the proper subdomain pretext
-		let starHostLen = hosts.filter(itm => itm.includes("*")).length // I assume that the user would want 1 subdomain, then 2, then 3, etc. Not just 5.
-		console.log("starHostLen the total subdomains allowed", starHostLen);
+		// // Find the SMEMBERS that contain *., *.*, etc and allow those domains with the proper subdomain pretext
+		// let starHostLen = hosts.filter(itm => itm.includes("*")).length // I assume that the user would want 1 subdomain, then 2, then 3, etc. Not just 5.
+		// console.log("starHostLen the total subdomains allowed", starHostLen);
 				
 		for(let key of allKeys){
-			console.log("key", key);
+			console.log("update_redis key", key);
 			let exists = false;
 			
 						// // Find base domain, and see how many subdomains this key has
@@ -53,6 +54,11 @@ var safeList = [
 						// }
 						
 			// If does not match or start with the safeList, then delete it
+
+			// Do a lookup
+			console.log("Pefortming Host.lookUp Now");
+			let lookUpKey = Host.lookUp(key)
+			console.log("lookUpKey", lookUpKey);
 			
 			for(let safe of safeList) {
 				if (key.startsWith(safe) || key == safe) {
@@ -69,10 +75,6 @@ var safeList = [
 				// await client.DEL(key)
 				console.log("!exists await clinet.DEL(key)");
 			}
-
-			// Do a lookup
-			let lookUpKey = Host.lookUp(key)
-			console.log("lookUpKey", lookUpKey);
 
 			// Just for record keeping
 			// let indx = hosts.findIndex(itm => itm == domain)
