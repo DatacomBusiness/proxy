@@ -55,23 +55,20 @@ var safeList = [ // Handles all keys other then the Host keys
 					break;
 				} 
 			}
-
-			// Do a lookup to see if it exists in the tree
-			let lookUpKey = await Host.lookUp(key)
-			console.log("lookUpKey", lookUpKey);
-
-			if(lookUpKey["Not a Valid Host Record"]) {
-				console.log("lookUpKey: Key doesnt exist");
-				exists = false
-			} else {
-				exists = true
-			}
-
 			console.log("does exists", exists);
 
 			if(!exists) {
-				// await client.DEL(key)
-				console.log("!exists await client.DEL(key)");
+				// Do a lookup to see if it exists in the tree
+				let lookUpKey = await Host.lookUp(key)
+				console.log("lookUpKey", lookUpKey);
+
+				if(lookUpKey["Not a Valid Host Record"]) {
+					console.log("lookUpKey: Key doesnt exist");
+					exists = false
+
+					// await client.DEL(key)
+					console.log("!exists await client.DEL(key)");
+				} 
 			}
 
 			// Just for record keeping
