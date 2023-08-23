@@ -12,10 +12,9 @@ const {Host} = require("../models/host")
 console.log("**************** update_host.js ****************");
 // console.log("Host", Host);
 
-var safeList = [
+var safeList = [ // Handles all keys other then the Host keys
 	"proxy_AuthToken",
 	"proxy_User",
-	"proxy_Host",
 	"proxy_Cached"
 ];
 
@@ -45,7 +44,7 @@ var safeList = [
 		// console.log("starHostLen the total subdomains allowed", starHostLen);
 				
 		for(let key of allKeys){
-			console.log("update_redis key", key);
+			console.log("\n update_redis key", key);
 			let exists = false;
 			
 						// // Find base domain, and see how many subdomains this key has
@@ -55,19 +54,23 @@ var safeList = [
 						// 	// await client.DEL(key)
 						// 	console.log("await clinet.DEL(key)");
 						// }
-						
-			// If does not match or start with the safeList, then delete it
-
-			// Do a lookup
-			console.log("Peforming Host.lookUp Now");
-			let lookUpKey = Host.lookUp(key)
-			console.log("lookUpKey", lookUpKey);
-			
+								
+			// If does not match or start with the safeList, then delete it. ***Covers all classes other than the Host Class***
 			for(let safe of safeList) {
 				if (key.startsWith(safe) || key == safe) {
-					console.log("Key: ", key, "does start with safeWord: ", safe);
+					console.log("Key: ", key, "does start with safeList word: ", safe);
 					
-					// Call lookup function to see if it exists first
+					// Do a lookup to see if it exists in the tree
+					let lookUpKey = await Host.lookUp(key)
+					console.log("lookUpKey", lookUpKey);
+
+					if(typeof lookUpKey == "Object") {
+						console.log("lookUpKey is an object");
+						exists = true
+					} else {
+						console.log("lookUpKey is not an object");
+						exists = false
+					}
 
 					exists = true
 				}

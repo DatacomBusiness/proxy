@@ -110,7 +110,7 @@ class Host extends Table{
 
 				// Loop over all the hosts in the redis.
 				for(let host of await this.list()){
-					console.log("buildLookUpObj host", host);
+					console.log("\n buildLookUpObj host", host);
 
 					// Spit the hosts on "." into its fragments .
 					let fragments = host.split('.');
@@ -136,12 +136,13 @@ class Host extends Table{
 
 						// Advance the pointer to the next level of the tree.
 						pointer = pointer[fragment];
-						console.log("buildLookUpObj pointer", pointer);
+						// console.log("buildLookUpObj pointer", pointer);
 					}
 				}
 
 				// When the look up tree is finished, remove the ready hold.
 				this.__lookUpIsReady = true;
+				console.log("Final this.lookUpObj", this.lookUpObj);
 				resolve("Tree is built")
 
 			}catch(error){
@@ -152,61 +153,60 @@ class Host extends Table{
 	}
 
 	static lookUp(host){
-		/*
-		Perform a complex lookup of @host on the look up tree.
-		*/
-
-		// Hold a pointer to the root of the look up tree
-		let place = this.lookUpObj;
-		console.log("this.lookUpObj", this.lookUpObj);
-		console.log("this.__lookUpIsReady", this.__lookUpIsReady);
-		// Get Host Prefix
-		console.log("this.constructor.name", this.constructor.name);
-		console.log("this.super.redisPrefix(this.prototype.constructor.name))", super.redisPrefix(this.prototype.constructor.name));
-
-		// if the host does not start with proxy_Host, then return undefined
-		if(host.startsWith(super.redisPrefix(this.prototype.constructor.name))) console.log("YES IT DOES!");
-
-		// Hold the last passed long wild card.
-		let last_resort = {};
-
-		// Walk over each fragment of the host, from right to left
-		console.log("host.split('.').reverse()", host.split('.').reverse());
-		for(let fragment of host.split('.').reverse()){
-			console.log("fragment", fragment);
-
-			// ------------------- Need to handle the use case where proxy_Host_* is a fragment also proxy_Host_subdomain also com:latest---------------------------//
-			if (fragment.includes("*") && fragment.length > 1) {
-				console.log("fragment includes a star", fragment)
-				// Parse it out and push it to the array
-			} else if(fragment.includes(this.prototype.constructor.name) && fragment.length > super.redisPrefix(this.prototype.constructor.name).length) {
-				console.log("fragemtn is greater than the contructor name" );
-			}else if(fragment.includes(":latest")) {
-				console.log("includes Latest");
+		return new Promise(async (resolve, reject) => {
+			console.log("********************* Peforming Host.lookUp Now**************************");
+			/*
+			Perform a complex lookup of @host on the look up tree.
+			*/
+	
+			// Hold a pointer to the root of the look up tree
+			let place = this.lookUpObj;
+			console.log("this.lookUpObj", this.lookUpObj);
+	
+			// Get Host Prefix
+			console.log("this.super.redisPrefix(this.prototype.constructor.name))", super.redisPrefix(this.prototype.constructor.name)); // works
+	
+			// if the host does not start with proxy_Host_, then return undefined
+			if(!host.startsWith(super.redisPrefix(this.prototype.constructor.name))) {
+				console.log("Not a valid Host record");
+				return "No Valid Host Record"
+			} else {
+				host = host.split(`${super.redisPrefix(this.prototype.constructor.name)}_`)[1]
+				console.log("Host is split on prefix", host);
 			}
-
-			// If a long wild card is found on this level, hold on to it
-			if(place['**']) last_resort = place['**'];
-
-			// If we have a match for the current fragment, update the current pointer
-			// A match in the lookup tree takes priority being a more exact match.
-			if({...last_resort, ...place}[fragment]){
-				place = {...last_resort, ...place}[fragment];
-				console.log("...last_resort, ...place}[fragment]", place);
-			// If we have a not exact fragment match, a wild card will do.
-			}else if(place['*']){
-				place = place['*']
-				console.log("place = place['*']", place);
-			// If no fragment can be matched, continue with the long wild card branch.
-			}else if(last_resort){
-				place = last_resort;
-				console.log("place", place);
-				console.log("last_resort", last_resort);
+	
+			// Hold the last passed long wild card.
+			let last_resort = {};
+	
+			// Walk over each fragment of the host, from right to left
+			console.log("host.split('.').reverse()", host.split('.').reverse());
+			for(let fragment of host.split('.').reverse()){
+				console.log("fragment", fragment);
+	
+				// If a long wild card is found on this level, hold on to it
+				if(place['**']) last_resort = place['**'];
+	
+				// If we have a match for the current fragment, update the current pointer
+				// A match in the lookup tree takes priority being a more exact match.
+				if({...last_resort, ...place}[fragment]){
+					place = {...last_resort, ...place}[fragment];
+					console.log("fragment was found in tree", place);
+				// If we have a not exact fragment match, a wild card will do.
+				}else if(place['*']){
+					place = place['*']
+					console.log("place = place['*']", place);
+				// If no fragment can be matched, continue with the long wild card branch.
+				}else if(last_resort){
+					place = last_resort;
+					console.log("place", place);
+					console.log("last_resort", last_resort);
+				}
 			}
-		}
-
-		// After the tree has been traversed, see if we have leaf node to return. 
-		if(place && place['#record']) return place['#record'];
+	
+				console.log("returning place['#record'];", place['#record']);
+			// After the tree has been traversed, see if we have leaf node to return. 
+			if(place && place['#record']) resolve(place['#record']);
+		})
 	}
 
 	static async lookUpReady(){
