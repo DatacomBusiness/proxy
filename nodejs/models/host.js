@@ -179,8 +179,8 @@ class Host extends Table{
 			console.log("this.lookUpObj", this.lookUpObj);
 	
 			// Get Host Prefix
-			console.log("this.super.redisPrefix(this.prototype.constructor.name))", redisPrefix(this.prototype.constructor.name)); // works
-			console.log("host.startsWith(redisPrefix(this.prototype.constructor.name))", host.startsWith(redisPrefix(this.prototype.constructor.name)));
+			// console.log("this.super.redisPrefix(this.prototype.constructor.name))", redisPrefix(this.prototype.constructor.name)); // works
+			// console.log("host.startsWith(redisPrefix(this.prototype.constructor.name))", host.startsWith(redisPrefix(this.prototype.constructor.name)));
 	
 			// if the host does not start with proxy_Host_, then return undefined
 			if(host.endsWith(":latest")) host = host.split(":")[0]
@@ -213,8 +213,8 @@ class Host extends Table{
 				// If no fragment can be matched, continue with the long wild card branch.
 				}else if(last_resort){
 					place = last_resort;
-					// console.log("place", place);
-					// console.log("last_resort", last_resort);
+					console.log("place", place);
+					console.log("last_resort", last_resort);
 				}
 			}
 	
