@@ -27,7 +27,6 @@ class Table{
 		try{
 			// console.log("this.prototype.constructor.name", JSON.stringify(this.prototype.constructor.name));
 			console.log("this", this);
-			console.log("this[this.prototype]", this[this.prototype]);
 
 
 			if(typeof index === 'object'){

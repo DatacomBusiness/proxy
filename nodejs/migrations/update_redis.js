@@ -67,9 +67,9 @@ var safeList = [ // Handles all keys other then the Host keys
 					console.log("lookUpKey: Key doesnt exist");
 					exists = false
 					listToDelete.push(key)
-
-					// await client.DEL(key)
+										
 					console.log("!exists await client.DEL(key)");
+					await client.DEL(key)
 				} 
 			}
 			
