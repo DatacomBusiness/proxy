@@ -32,17 +32,10 @@ var safeList = [ // Handles all keys other then the Host keys
 		let allKeys = await client.KEYS("*")
 		console.log("allKeys", allKeys);
 		var listToDelete = []
-		// Get list of hosts
-		// let hosts = await client.SMEMBERS('proxy_Host');
-		// console.log("hosts", hosts);
 
 		// Build Lookup tree
 		let tree = await Host.buildLookUpObj()
 		console.log("tree", tree);
-
-		// // Find the SMEMBERS that contain *., *.*, etc and allow those domains with the proper subdomain pretext
-		// let starHostLen = hosts.filter(itm => itm.includes("*")).length // I assume that the user would want 1 subdomain, then 2, then 3, etc. Not just 5.
-		// console.log("starHostLen the total subdomains allowed", starHostLen);
 				
 		for(let key of allKeys){
 			console.log("\nupdate_redis.js KEY", key);
@@ -59,7 +52,7 @@ var safeList = [ // Handles all keys other then the Host keys
 			console.log("does exists", exists);
 
 			if(!exists) {
-				// Do a lookup to see if it exists in the tree
+				// Do a lookup to see if it exists in the lookUpTree
 				let lookUpKey = await Host.lookUp(key)
 				console.log("lookUpKey", lookUpKey);
 
@@ -68,22 +61,9 @@ var safeList = [ // Handles all keys other then the Host keys
 					listToDelete.push(key)
 										
 					console.log("!exists await client.DEL(key)");
-					// await client.DEL(key)
+					await client.DEL(key)
 				} 
 			}
-			
-
-			// Just for record keeping
-			// let indx = hosts.findIndex(itm => itm == domain)
-			
-			// if(indx >=0) {
-			// 	let host = hosts[indx]
-			// 	console.log("host", host);
-
-			// 	let created_on = await client.HGET('proxy_Host_'+host, 'updated');
-			// 	await client.HSET('proxy_Host_'+host, 'updated_on', created_on);
-			// 	await client.HSET('proxy_Host_'+host, 'updated_by', User.username);
-			// }
 			
 		}
 		console.log("listToDelete",listToDelete);
