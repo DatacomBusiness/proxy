@@ -250,9 +250,12 @@ class Table{
 	async remove(data){
 		console.log("********Remove method called**********", data);
 		console.log("remove data", data); // undefined
-		console.log("this[this.constructor._key]", this[this.constructor._key]);
+		console.log("this[this.constructor]", this[this.constructor]);
+		console.log("this.constructor", this.constructor);
+		console.log("this.prototype.constructor", this.prototype.constructor);
 		console.log("this", this);
 		console.log("this[this]", this[this]);
+		console.log("this.super.redisPrefix(this.prototype.constructor.name))", super.redisPrefix("Host")); 
 		// Remove an entry from this table.
 
 		try{
@@ -261,18 +264,18 @@ class Table{
 			let count
 			if(data) {
 				count = await client.DEL(
-					this[this.redisPrefix(`${this.constructor.name}_${data}`)]
+					this.redisPrefix(`${this.constructor.name}_${data}`)
 				);
 			} else {
 				
 				await client.SREM(
-					this[this.redisPrefix(this.constructor.name)],
+					this.redisPrefix(this.constructor.name),
 					this[this.constructor._key]
 				);
 	
 				// Remove the entries hash values.
 				count = await client.DEL(
-					this[this.redisPrefix(`${this.constructor.name}_${this[this.constructor._key]}`)]
+					this.redisPrefix(`${this.constructor.name}_${this[this.constructor._key]}`)
 				);
 	
 				// Return the number of removed values to the caller.
