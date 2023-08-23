@@ -151,6 +151,15 @@ class Host extends Table{
 
 		// Hold a pointer to the root of the look up tree
 		let place = this.lookUpObj;
+		console.log("this.lookUpObj", this.lookUpObj);
+		console.log("this.__lookUpIsReady", this.__lookUpIsReady);
+		// Get Host Prefix
+		console.log("this.constructor.name", this.constructor.name);
+		console.log("this.prototype.constructor.name", this.prototype.constructor.name);
+		console.log("this.super.redisPrefix(this.constructor.name))", super.redisPrefix(this.constructor.name));
+
+		// if the host does not start with proxy_Host, then return undefined
+		if(host.startsWith(super.redisPrefix(this.constructor.name))) console.log("YES IT DOES!");
 
 		// Hold the last passed long wild card.
 		let last_resort = {};
@@ -160,7 +169,15 @@ class Host extends Table{
 		for(let fragment of host.split('.').reverse()){
 			console.log("fragment", fragment);
 
-			// ------------------- Need to handle the use case where proxy_Host_* is a fragment ---------------------------//
+			// ------------------- Need to handle the use case where proxy_Host_* is a fragment also proxy_Host_subdomain also com:latest---------------------------//
+			if (fragment.includes("*") && fragment.length > 1) {
+				console.log("fragment includes a star", fragment)
+				// Parse it out and push it to the array
+			} else if() {
+				
+			}else if(fragment.includes(":latest")) {
+				console.log("includes Latest");
+			}
 
 			// If a long wild card is found on this level, hold on to it
 			if(place['**']) last_resort = place['**'];
@@ -169,15 +186,18 @@ class Host extends Table{
 			// A match in the lookup tree takes priority being a more exact match.
 			if({...last_resort, ...place}[fragment]){
 				place = {...last_resort, ...place}[fragment];
+				console.log("...last_resort, ...place}[fragment]", place);
 			// If we have a not exact fragment match, a wild card will do.
 			}else if(place['*']){
 				place = place['*']
+				console.log("place = place['*']", place);
 			// If no fragment can be matched, continue with the long wild card branch.
 			}else if(last_resort){
 				place = last_resort;
+				console.log("place", place);
+				console.log("last_resort", last_resort);
 			}
-			console.log("place", place);
-			console.log("last_resort", last_resort);
+			
 		}
 
 		// After the tree has been traversed, see if we have leaf node to return. 

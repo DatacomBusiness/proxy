@@ -32,7 +32,7 @@ class Table{
 			}
 
 			var getPrefix = `${this.prototype.constructor.name}_${index}`
-			console.log("getPrefix", getPrefix);
+			// console.log("getPrefix", getPrefix);
 
 			let result = await client.HGETALL(
 				redisPrefix(getPrefix)

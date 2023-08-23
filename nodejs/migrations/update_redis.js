@@ -14,10 +14,9 @@ console.log("**************** update_host.js ****************");
 
 var safeList = [
 	"proxy_AuthToken",
-	"proxy_host",
 	"proxy_User",
 	"proxy_Host",
-	"token_auth"
+	"proxy_Cached"
 ];
 
 (async function(){
@@ -56,7 +55,7 @@ var safeList = [
 			// If does not match or start with the safeList, then delete it
 
 			// Do a lookup
-			console.log("Pefortming Host.lookUp Now");
+			console.log("Peforming Host.lookUp Now");
 			let lookUpKey = Host.lookUp(key)
 			console.log("lookUpKey", lookUpKey);
 			
