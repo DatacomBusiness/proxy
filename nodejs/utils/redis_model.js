@@ -31,12 +31,12 @@ class Table{
 			}
 
 			var getPrefix = `${this.prototype.constructor.name}_${index}`
-			// console.log("getPrefix", getPrefix);
+			console.log("getPrefix", getPrefix);
 
 			let result = await client.HGETALL(
 				redisPrefix(getPrefix)
 			);
-			// console.log("get result", result);
+			console.log("get result", result);
 
 			if(!Object.keys(result).length && this.prototype.constructor.name != "Cached"){
 				let error = new Error('EntryNotFound');

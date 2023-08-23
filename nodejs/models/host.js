@@ -58,7 +58,7 @@ class Host extends Table{
 
 			console.log("_host", _host); // New host name
 			let cached = await Cached.listDetail();
-			console.log("61 cached", cached);
+			console.log("61 cachedList", cached);
 			for(let cache of cached){
 				if(cache.host == _host){
 					console.log("cache", cache);
