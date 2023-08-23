@@ -25,21 +25,18 @@ class Table{
 	static async get(index){
 		console.log("********GET method called**********", index);
 		try{
-			// console.log("this.prototype.constructor.name", JSON.stringify(this.prototype.constructor.name));
-			console.log("this", this);
-
 
 			if(typeof index === 'object'){
 				index = index[this._key];
 			}
 
 			var getPrefix = `${this.prototype.constructor.name}_${index}`
-			console.log("getPrefix", getPrefix);
+			// console.log("getPrefix", getPrefix);
 
 			let result = await client.HGETALL(
 				redisPrefix(getPrefix)
 			);
-			console.log("get result", result);
+			// console.log("get result", result);
 
 			if(!Object.keys(result).length && this.prototype.constructor.name != "Cached"){
 				let error = new Error('EntryNotFound');
