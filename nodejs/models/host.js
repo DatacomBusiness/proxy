@@ -173,6 +173,7 @@ class Host extends Table{
 			
 			host = host.split(`${super.redisPrefix(this.prototype.constructor.name)}_`)[1]
 			console.log("Host is split on prefix", host);
+			if(!host) resolve({"Not a Valid Host Record": host})
 	
 			// Hold the last passed long wild card.
 			let last_resort = {};

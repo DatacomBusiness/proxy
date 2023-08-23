@@ -53,17 +53,20 @@ var safeList = [ // Handles all keys other then the Host keys
 					console.log("Key: ", key, "does start with safeList word: ", safe);
 					exists = true
 					break;
-				} else {
-					// Do a lookup to see if it exists in the tree
-					let lookUpKey = await Host.lookUp(key)
-					console.log("lookUpKey", lookUpKey);
-
-					if(lookUpKey["Not a Valid Host Record"]) {
-						console.log("lookUpKey: Key doesnt exist");
-						exists = false
-					} 
-				}
+				} 
 			}
+
+			// Do a lookup to see if it exists in the tree
+			let lookUpKey = await Host.lookUp(key)
+			console.log("lookUpKey", lookUpKey);
+
+			if(lookUpKey["Not a Valid Host Record"]) {
+				console.log("lookUpKey: Key doesnt exist");
+				exists = false
+			} else {
+				exists = true
+			}
+
 			console.log("does exists", exists);
 
 			if(!exists) {
