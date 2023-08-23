@@ -7,19 +7,19 @@ const conf = require('../conf/conf');
 const client = createClient({});
 client.connect()
 
+function redisPrefix(key){
+	// console.log("redisPrefix conf", conf);
+	// console.log("redisPrefix key", key);
+	let response = `${conf.redis.prefix}${key}`
+	console.log("redisPrefix response", response);
+	return response;
+}
+
 class Table{
 	constructor(data){
 		for(let key in data){
 			this[key] = data[key];
 		}
-	}
-
-	static redisPrefix(key){
-		// console.log("redisPrefix conf", conf);
-		// console.log("redisPrefix key", key);
-		let response = `${conf.redis.prefix}${key}`
-		console.log("redisPrefix response", response);
-		return response;
 	}
 
 	static async get(index){
@@ -35,7 +35,7 @@ class Table{
 			// console.log("getPrefix", getPrefix);
 
 			let result = await client.HGETALL(
-				this.redisPrefix(getPrefix)
+				redisPrefix(getPrefix)
 			);
 			// console.log("get result", result);
 
@@ -74,7 +74,7 @@ class Table{
 		// return a list of all the index keys for this table.
 		try{
 			let listMembers = await client.SMEMBERS(
-				this.redisPrefix(this.prototype.constructor.name)
+				redisPrefix(this.prototype.constructor.name)
 			);
 			console.log("listMembers", listMembers);
 			return listMembers
@@ -117,7 +117,7 @@ class Table{
 
 			// Add the key to the members for this redis table
 			await client.SADD(
-				this.redisPrefix(this.prototype.constructor.name),
+				redisPrefix(this.prototype.constructor.name),
 				data[this._key]
 			);
 
@@ -130,7 +130,7 @@ class Table{
 				// console.log("125 add updatePrefix", updatePrefix);
 
 				await client.HSET(
-					this.redisPrefix(updatePrefix), 
+					redisPrefix(updatePrefix), 
 					key,
 					objValidate.parseToString(data[key])
 				);
@@ -165,9 +165,9 @@ class Table{
 				console.log('data["host"]', data["host"]);
 				// console.log("this[this.constructor._key", this[this.constructor._key]); // Old key
 				
-				let redisKey = this.redisPrefix(`${this.constructor.name}_${data["host"]}`)
+				let redisKey = redisPrefix(`${this.constructor.name}_${data["host"]}`)
 				console.log("redisKey", redisKey); // New key
-				var oldKey = this.redisPrefix(`${this.constructor.name}_${oldHost}`)
+				var oldKey = redisPrefix(`${this.constructor.name}_${oldHost}`)
 				console.log("oldKey, oldKey", oldKey);
 
 				// Merge the current data into with the updated data 
@@ -232,7 +232,7 @@ class Table{
 					this[key] = data[key];
 					
 					await client.HSET(
-						this.redisPrefix(`${this.constructor.name}_${data["host"]}`),
+						redisPrefix(`${this.constructor.name}_${data["host"]}`),
 						key, String(data[key])
 					);
 				}
@@ -262,18 +262,18 @@ class Table{
 			let count
 			if(data) {
 				count = await client.DEL(
-					this.redisPrefix(`${this.constructor.name}_${data}`)
+					redisPrefix(`${this.constructor.name}_${data}`)
 				);
 			} else {
 				
 				await client.SREM(
-					this.redisPrefix(this.constructor.name),
+					redisPrefix(this.constructor.name),
 					this[this.constructor._key]
 				);
 	
 				// Remove the entries hash values.
 				count = await client.DEL(
-					this.redisPrefix(`${this.constructor.name}_${this[this.constructor._key]}`)
+					redisPrefix(`${this.constructor.name}_${this[this.constructor._key]}`)
 				);
 	
 				// Return the number of removed values to the caller.
