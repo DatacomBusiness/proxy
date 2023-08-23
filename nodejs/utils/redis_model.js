@@ -14,9 +14,24 @@ class Table{
 		}
 	}
 
+	redisPrefix(key){
+		console.log("redisPrefix conf", conf);
+		console.log("redisPrefix key", key);
+		let response = `${conf.redis.prefix}${key}`
+		console.log("redisPrefix response", response);
+		return response;
+	}
+
+
 	static async get(index){
 		console.log("********GET method called**********", index);
+		
 		try{
+			console.log("this", this);
+			console.log("this[this.prototype]", this[this.prototype]);
+			console.log("this.prototype", JSON.stringify(this.prototype));
+			console.log("Table", Table);
+
 			// console.log("this.prototype.constructor.name", JSON.stringify(this.prototype.constructor.name));
 
 			if(typeof index === 'object'){
@@ -48,14 +63,6 @@ class Table{
 		}catch(error){
 			throw error;
 		}
-	}
-
-	redisPrefix(key){
-		console.log("redisPrefix conf", conf);
-		console.log("redisPrefix key", key);
-		let response = `${conf.redis.prefix}${key}`
-		console.log("redisPrefix response", response);
-		return response;
 	}
 
 	static async exists(index){
