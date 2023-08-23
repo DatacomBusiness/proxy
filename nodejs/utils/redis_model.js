@@ -30,7 +30,8 @@ class Table{
 			console.log("this", this);
 			console.log("this[this.prototype]", this[this.prototype]);
 			console.log("this.prototype", JSON.stringify(this.prototype));
-			console.log("Table", Table);
+			console.log("Table", JSON.stringify(Table));
+			console.log("Table.prototype", Table.prototype);
 
 			// console.log("this.prototype.constructor.name", JSON.stringify(this.prototype.constructor.name));
 
