@@ -72,7 +72,7 @@ var safeList = [ // Handles all keys other then the Host keys
 					console.log("!exists await client.DEL(key)");
 				} 
 			}
-			console.log("listToDelete",listToDelete);
+			
 
 			// Just for record keeping
 			// let indx = hosts.findIndex(itm => itm == domain)
@@ -87,6 +87,7 @@ var safeList = [ // Handles all keys other then the Host keys
 			// }
 			
 		}
+		console.log("listToDelete",listToDelete);
 	} catch(err) {
 		console.log("update_redis err", err);
 	}
