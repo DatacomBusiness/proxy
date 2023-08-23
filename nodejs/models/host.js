@@ -155,11 +155,10 @@ class Host extends Table{
 		console.log("this.__lookUpIsReady", this.__lookUpIsReady);
 		// Get Host Prefix
 		console.log("this.constructor.name", this.constructor.name);
-		console.log("this.prototype.constructor.name", this.prototype.constructor.name);
-		console.log("this.super.redisPrefix(this.constructor.name))", super.redisPrefix(this.constructor.name));
+		console.log("this.super.redisPrefix(this.prototype.constructor.name))", super.redisPrefix(this.prototype.constructor.name));
 
 		// if the host does not start with proxy_Host, then return undefined
-		if(host.startsWith(super.redisPrefix(this.constructor.name))) console.log("YES IT DOES!");
+		if(host.startsWith(super.redisPrefix(this.prototype.constructor.name))) console.log("YES IT DOES!");
 
 		// Hold the last passed long wild card.
 		let last_resort = {};
@@ -173,7 +172,7 @@ class Host extends Table{
 			if (fragment.includes("*") && fragment.length > 1) {
 				console.log("fragment includes a star", fragment)
 				// Parse it out and push it to the array
-			} else if(fragment.includes(this.constructor.name) && fragment.length > super.redisPrefix(this.constructor.name).length) {
+			} else if(fragment.includes(this.prototype.constructor.name) && fragment.length > super.redisPrefix(this.prototype.constructor.name).length) {
 				console.log("fragemtn is greater than the contructor name" );
 			}else if(fragment.includes(":latest")) {
 				console.log("includes Latest");
