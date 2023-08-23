@@ -15,7 +15,7 @@ console.log("**************** update_host.js ****************");
 var safeList = [ // Handles all keys other then the Host keys
 	"proxy_AuthToken",
 	"proxy_User",
-	"proxy_Cached"
+	// "proxy_Cached"
 ];
 
 (async function(){
@@ -64,12 +64,11 @@ var safeList = [ // Handles all keys other then the Host keys
 				console.log("lookUpKey", lookUpKey);
 
 				if(lookUpKey["Valid"] == false) {
-					console.log("lookUpKey: Key doesnt exist");
 					exists = false
 					listToDelete.push(key)
 										
 					console.log("!exists await client.DEL(key)");
-					await client.DEL(key)
+					// await client.DEL(key)
 				} 
 			}
 			

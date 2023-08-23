@@ -183,12 +183,12 @@ class Host extends Table{
 			console.log("host.startsWith(redisPrefix(this.prototype.constructor.name))", host.startsWith(redisPrefix(this.prototype.constructor.name)));
 	
 			// if the host does not start with proxy_Host_, then return undefined
-			if(host.endsWith(":latest")) resolve({"Valid": true, "host": host})
+			if(host.endsWith(":latest")) host = host.split(":")[0]
 			else if(host == redisPrefix(this.prototype.constructor.name)) resolve({"Valid": true, "host": host})
-			else if(host.startsWith(redisPrefix(this.prototype.constructor.name)) == false) resolve({"Valid": false, "host": host, "caught_by": "startsWith"})
-			
-			host = host.split(`${redisPrefix(this.prototype.constructor.name)}_`)[1]
-			if(!host) resolve({"Valid": false, "host": host, "caught_by": "split"})
+			else if(host.split("_").length == 3) host = host.split("_")[2]; // This is a correct format for proxy_Host and proxy_Cached
+
+			if(!host) resolve({"Valid": false, "host": host})
+			console.log("lookUp host", host);
 	
 			// Hold the last passed long wild card.
 			let last_resort = {};
@@ -213,12 +213,12 @@ class Host extends Table{
 				// If no fragment can be matched, continue with the long wild card branch.
 				}else if(last_resort){
 					place = last_resort;
-					console.log("place", place);
-					console.log("last_resort", last_resort);
+					// console.log("place", place);
+					// console.log("last_resort", last_resort);
 				}
 			}
 	
-				// console.log("returning place['#record'];", place['#record']);
+				console.log("returning place['#record'];", place['#record']);
 			// After the tree has been traversed, see if we have leaf node to return. 
 			if(place && place['#record']) resolve(place['#record']);
 		}).catch(err => {
