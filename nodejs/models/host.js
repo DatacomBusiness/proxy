@@ -173,8 +173,8 @@ class Host extends Table{
 			if (fragment.includes("*") && fragment.length > 1) {
 				console.log("fragment includes a star", fragment)
 				// Parse it out and push it to the array
-			} else if() {
-				
+			} else if(fragment.includes(this.constructor.name) && fragment.length > super.redisPrefix(this.constructor.name).length) {
+				console.log("fragemtn is greater than the contructor name" );
 			}else if(fragment.includes(":latest")) {
 				console.log("includes Latest");
 			}
