@@ -252,7 +252,7 @@ class Table{
 		console.log("remove data", data); // undefined
 		console.log("this.constructor", this.constructor);
 		console.log("this", this);
-		console.log("this[this]", this[this]);
+		console.log("this.getOwnPropertyNames(Foo.prototype);", Object.getOwnPropertyNames(this.prototype));
 		console.log("this.super.redisPrefix(this.prototype.constructor.name))", super.redisPrefix("Host")); 
 		// Remove an entry from this table.
 
