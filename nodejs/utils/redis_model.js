@@ -250,9 +250,7 @@ class Table{
 	async remove(data){
 		console.log("********Remove method called**********", data);
 		console.log("remove data", data); // undefined
-		console.log("this[this.constructor]", this[this.constructor]);
 		console.log("this.constructor", this.constructor);
-		console.log("this.prototype.constructor", this.prototype.constructor);
 		console.log("this", this);
 		console.log("this[this]", this[this]);
 		console.log("this.super.redisPrefix(this.prototype.constructor.name))", super.redisPrefix("Host")); 
