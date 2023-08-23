@@ -158,6 +158,8 @@ class Host extends Table{
 
 				// When the look up tree is finished, remove the ready hold.
 				this.__lookUpIsReady = true;
+
+				console.log("this.lookUpObj", this.lookUpObj);
 				resolve("************************* Tree is built *************************")
 
 			}catch(error){
