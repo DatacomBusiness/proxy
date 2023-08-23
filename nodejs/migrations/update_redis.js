@@ -36,6 +36,10 @@ var safeList = [
 		// let hosts = await client.SMEMBERS('proxy_Host');
 		// console.log("hosts", hosts);
 
+		// Build Lookup tree
+		let tree = await Host.buildLookUpObj()
+		console.log("tree", tree);
+
 		// // Find the SMEMBERS that contain *., *.*, etc and allow those domains with the proper subdomain pretext
 		// let starHostLen = hosts.filter(itm => itm.includes("*")).length // I assume that the user would want 1 subdomain, then 2, then 3, etc. Not just 5.
 		// console.log("starHostLen the total subdomains allowed", starHostLen);

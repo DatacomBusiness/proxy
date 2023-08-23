@@ -96,52 +96,59 @@ class Host extends Table{
 	}
 
 	static async buildLookUpObj(){
-		/*
-		Build a look up tree for domain records in the redis back end to allow
-		complex looks with wildcards.
-		*/
+		return new Promise(async (resolve, reject) => {
+			/*
+			Build a look up tree for domain records in the redis back end to allow
+			complex looks with wildcards.
+			*/
 
-		// Hold lookUp ready while the look up object is being built.
-		this.__lookUpIsReady = false;
-		this.lookUpObj = {};
+			// Hold lookUp ready while the look up object is being built.
+			this.__lookUpIsReady = false;
+			this.lookUpObj = {};
 
-		try{
+			try{
 
-			// Loop over all the hosts in the redis.
-			for(let host of await this.list()){
+				// Loop over all the hosts in the redis.
+				for(let host of await this.list()){
+					console.log("buildLookUpObj host", host);
 
-				// Spit the hosts on "." into its fragments .
-				let fragments = host.split('.');
+					// Spit the hosts on "." into its fragments .
+					let fragments = host.split('.');
+					console.log("buildLookUpObj fragments", fragments);
 
-				// Hold a pointer to the root of the lookup tree.
-				let pointer = this.lookUpObj;
+					// Hold a pointer to the root of the lookup tree.
+					let pointer = this.lookUpObj;
 
-				// Walk over each fragment, popping from right to left. 
-				while(fragments.length){
-					let fragment = fragments.pop();
+					// Walk over each fragment, popping from right to left. 
+					while(fragments.length){
+						let fragment = fragments.pop();
 
-					// Add a branch to the lookup at the current position
-					if(!pointer[fragment]){
-						pointer[fragment] = {};
+						// Add a branch to the lookup at the current position
+						if(!pointer[fragment]){
+							pointer[fragment] = {};
+						}
+
+						// Add the record(leaf) when we hit the a full host name.
+						// #record denotes a leaf node on this tree.
+						if(fragments.length === 0){
+							pointer[fragment]['#record'] = await this.get(host)
+						}
+
+						// Advance the pointer to the next level of the tree.
+						pointer = pointer[fragment];
+						console.log("buildLookUpObj pointer", pointer);
 					}
-
-					// Add the record(leaf) when we hit the a full host name.
-					// #record denotes a leaf node on this tree.
-					if(fragments.length === 0){
-						pointer[fragment]['#record'] = await this.get(host)
-					}
-
-					// Advance the pointer to the next level of the tree.
-					pointer = pointer[fragment];
 				}
+
+				// When the look up tree is finished, remove the ready hold.
+				this.__lookUpIsReady = true;
+				resolve("Tree is built")
+
+			}catch(error){
+				console.error(error);
+				reject()
 			}
-
-			// When the look up tree is finished, remove the ready hold.
-			this.__lookUpIsReady = true;
-
-		}catch(error){
-			console.error(error);
-		}
+		})
 	}
 
 	static lookUp(host){
@@ -196,7 +203,6 @@ class Host extends Table{
 				console.log("place", place);
 				console.log("last_resort", last_resort);
 			}
-			
 		}
 
 		// After the tree has been traversed, see if we have leaf node to return. 
