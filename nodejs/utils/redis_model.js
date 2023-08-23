@@ -250,26 +250,29 @@ class Table{
 	async remove(data){
 		console.log("********Remove method called**********", data);
 		console.log("remove data", data); // undefined
+		console.log("this[this.constructor._key]", this[this.constructor._key]);
+		console.log("this", this);
+		console.log("this[this]", this[this]);
 		// Remove an entry from this table.
 
 		try{
-			console.log("removing data for", this.constructor.name);
+			console.log("remove this.constructor.name", this.constructor.name);
 			// Remove the index key from the tables members list.
 			let count
 			if(data) {
 				count = await client.DEL(
-					this.redisPrefix(`${this.constructor.name}_${data}`)
+					this[this.redisPrefix(`${this.constructor.name}_${data}`)]
 				);
 			} else {
 				
 				await client.SREM(
-					this.redisPrefix(this.constructor.name),
+					this[this.redisPrefix(this.constructor.name)],
 					this[this.constructor._key]
 				);
 	
 				// Remove the entries hash values.
 				count = await client.DEL(
-					this.redisPrefix(`${this.constructor.name}_${this[this.constructor._key]}`)
+					this[this.redisPrefix(`${this.constructor.name}_${this[this.constructor._key]}`)]
 				);
 	
 				// Return the number of removed values to the caller.
