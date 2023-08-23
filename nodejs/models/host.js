@@ -46,7 +46,7 @@ class Host extends Table{
 		}
 	}
 
-	async bustCache(parent){
+	async bustCache(_host){
 		console.log("********bustCache method called**********");
 		try{
 
@@ -56,13 +56,13 @@ class Host extends Table{
 			let constru = JSON.stringify(this[this.constructor])
 			console.log("constru", constru);
 
-			console.log("parent", parent); // New host name
+			console.log("_host", _host); // New host name
 			let cached = await Cached.listDetail();
-			console.log("44 cached", cached);
+			console.log("61 cached", cached);
 			for(let cache of cached){
-				if(cache.parent == parent){
+				if(cache.host == _host){
 					console.log("cache", cache);
-					let host = await Host.get(cache.host);
+					host = await Host.get(cache.host);
 					console.log("cached host", host);
 					await cache.remove("Cache");
 				}
