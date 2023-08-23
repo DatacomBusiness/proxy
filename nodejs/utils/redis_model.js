@@ -253,23 +253,27 @@ class Table{
 
 		try{
 			console.log("removing data for",this.constructor.name);
+			console.log("Removing from SET: ", `${this.constructor.name}_${data}`);
 			// Remove the index key from the tables members list.
 			let count
 			if(data) {
 				count = await client.DEL(
 					redisPrefix(`${this.constructor.name}_${data}`)
 				);
+
 			} else {
 				
-				await client.SREM(
+				let deleted = await client.SREM(
 					redisPrefix(this.constructor.name),
 					this[this.constructor._key]
 				);
+				console.log("deleted", deleted);
 	
 				// Remove the entries hash values.
 				count = await client.DEL(
 					redisPrefix(`${this.constructor.name}_${this[this.constructor._key]}`)
 				);
+				console.log("count", count);
 	
 				// Return the number of removed values to the caller.
 				return count;
