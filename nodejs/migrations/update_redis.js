@@ -63,7 +63,7 @@ var safeList = [ // Handles all keys other then the Host keys
 				let lookUpKey = await Host.lookUp(key)
 				console.log("lookUpKey", lookUpKey);
 
-				if(lookUpKey["Valid"] == false || !lookUpKey) {
+				if(!lookUpKey) {
 					exists = false
 					listToDelete.push(key)
 										
