@@ -153,7 +153,7 @@ class Host extends Table{
 	}
 
 	static lookUp(host){
-		return new Promise(async (resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			console.log("********************* Peforming Host.lookUp Now**************************");
 			/*
 			Perform a complex lookup of @host on the look up tree.
@@ -165,11 +165,12 @@ class Host extends Table{
 	
 			// Get Host Prefix
 			console.log("this.super.redisPrefix(this.prototype.constructor.name))", super.redisPrefix(this.prototype.constructor.name)); // works
+			console.log("host.startsWith(super.redisPrefix(this.prototype.constructor.name))", host.startsWith(super.redisPrefix(this.prototype.constructor.name)));
 	
 			// if the host does not start with proxy_Host_, then return undefined
 			if(!host.startsWith(super.redisPrefix(this.prototype.constructor.name))) {
 				console.log("Not a valid Host record");
-				resolve("No Valid Host Record")
+				resolve("No Valid Host Record to parse");
 			} else {
 				host = host.split(`${super.redisPrefix(this.prototype.constructor.name)}_`)[1]
 				console.log("Host is split on prefix", host);
@@ -190,11 +191,11 @@ class Host extends Table{
 				// A match in the lookup tree takes priority being a more exact match.
 				if({...last_resort, ...place}[fragment]){
 					place = {...last_resort, ...place}[fragment];
-					console.log("fragment was found in tree", place);
+					// console.log("fragment was found in tree", place);
 				// If we have a not exact fragment match, a wild card will do.
 				}else if(place['*']){
 					place = place['*']
-					console.log("place = place['*']", place);
+					// console.log("place = place['*']", place);
 				// If no fragment can be matched, continue with the long wild card branch.
 				}else if(last_resort){
 					place = last_resort;
@@ -206,6 +207,8 @@ class Host extends Table{
 				console.log("returning place['#record'];", place['#record']);
 			// After the tree has been traversed, see if we have leaf node to return. 
 			if(place && place['#record']) resolve(place['#record']);
+		}).catch(err => {
+			console.log("promise error", err);
 		})
 	}
 

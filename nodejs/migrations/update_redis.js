@@ -44,38 +44,27 @@ var safeList = [ // Handles all keys other then the Host keys
 		// console.log("starHostLen the total subdomains allowed", starHostLen);
 				
 		for(let key of allKeys){
-			console.log("\nupdate_redis key", key);
+			console.log("\nupdate_redis.js KEY", key);
 			let exists = false;
-			
-						// // Find base domain, and see how many subdomains this key has
-						// let parts = key.split(".");	let subDomainQty = parts.length -2; let arr = parts.slice(-2);	let domain = arr.join();
-						// // If subDomainQty is greater than starLenHost, then delete the keys that have more 
-						// if(subDomainQty > starHostLen) {
-						// 	// await client.DEL(key)
-						// 	console.log("await clinet.DEL(key)");
-						// }
-								
+										
 			// If does not match or start with the safeList, then delete it. ***Covers all classes other than the Host Class***
 			for(let safe of safeList) {
 				if (key.startsWith(safe) || key == safe) {
 					console.log("Key: ", key, "does start with safeList word: ", safe);
-					
+					exists = true
+					break;
+				} else {
 					// Do a lookup to see if it exists in the tree
 					let lookUpKey = await Host.lookUp(key)
 					console.log("lookUpKey", lookUpKey);
 
-					if(typeof lookUpKey == "Object") {
-						console.log("lookUpKey is an object");
-						exists = true
-					} else {
-						console.log("lookUpKey is not an object");
+					if(!typeof lookUpKey == "Object") {
+						console.log("lookUpKey is a string or undefined");
 						exists = false
-					}
-
-					exists = true
+					} 
 				}
 			}
-			console.log("exists", exists);
+			console.log("does exists", exists);
 
 			if(!exists) {
 				// await client.DEL(key)
