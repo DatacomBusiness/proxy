@@ -31,6 +31,7 @@ var safeList = [ // Handles all keys other then the Host keys
 		// Loop thru SMEMBERS and make delete all Keys that are not associated with the domains
 		let allKeys = await client.KEYS("*")
 		console.log("allKeys", allKeys);
+		var listToDelete = []
 		// Get list of hosts
 		// let hosts = await client.SMEMBERS('proxy_Host');
 		// console.log("hosts", hosts);
@@ -65,11 +66,13 @@ var safeList = [ // Handles all keys other then the Host keys
 				if(lookUpKey["Valid"] == false) {
 					console.log("lookUpKey: Key doesnt exist");
 					exists = false
+					listToDelete.push(key)
 
 					// await client.DEL(key)
 					console.log("!exists await client.DEL(key)");
 				} 
 			}
+			console.log("listToDelete",listToDelete);
 
 			// Just for record keeping
 			// let indx = hosts.findIndex(itm => itm == domain)
