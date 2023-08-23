@@ -49,6 +49,13 @@ class Host extends Table{
 	async bustCache(parent){
 		console.log("********bustCache method called**********");
 		try{
+
+			// Is called from routes?
+			let key = this[this.constructor._key]
+			console.log("key", key);
+			let constru = JSON.stringify(this[this.constructor])
+			console.log("constru", constru);
+
 			console.log("parent", parent); // New host name
 			let cached = await Cached.listDetail();
 			console.log("44 cached", cached);

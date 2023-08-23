@@ -60,7 +60,10 @@ router.put('/:item(*)', async function(req, res, next){
 router.delete('/:item(*)', async function(req, res, next){
 	try{
 		let item = await Model.get(req.params.item);
+		console.log("routes calling await item.remove()");
 		let count = await item.remove();
+		console.log("routes calling await item.bustCache()");
+		let cache = await item.bustCache()
 
 		return res.json({
 			message: `${req.params.item} deleted`,
