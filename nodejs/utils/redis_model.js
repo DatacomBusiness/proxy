@@ -14,7 +14,7 @@ class Table{
 		}
 	}
 
-	redisPrefix(key){
+	static redisPrefix(key){
 		// console.log("redisPrefix conf", conf);
 		// console.log("redisPrefix key", key);
 		let response = `${conf.redis.prefix}${key}`
