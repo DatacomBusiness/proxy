@@ -46,11 +46,17 @@
 		app.host.list(function(err, data){
 			if(err) return app.util.actionMessage(err, {type: 'danger'});	
 			if(data){
+				console.log("data", data);
+				$.each(data, function(err, data) {
+					console.log("data", data);
+					console.log("err", err);
+				});
 				$.each(data, function( key, value ) {
 					value['updated_on'] = moment(value['updated_on'], "x").fromNow();
 					value['targetssl'] = value['targetssl'] ? "https://" : "http://";
 					value['forcessl'] = value['forcessl'] ? "https://" : "http://";
 					host_row = ich.rowTemplate(value);
+					console.log("host_row", host_row);
 					$('#tableAJAX').append(host_row);
 				});
 				app.util.actionMessage(actionMessage || '', {type: 'info'});
