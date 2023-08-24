@@ -250,4 +250,6 @@
 "162.142.125.214",
 "167.94.145.57"
 
-{"host": "rokenbit.com", "parent": "rokenbit.com"}
+{host: "rokenbit.com", parent: "rokenbit.com"}
+
+{ host: 'mike.databoxcorp.com', parent: '*.databoxcorp.com' }

@@ -286,7 +286,7 @@ class Table{
 				);
 				console.log("count", count);
 
-				let deleteCert = await client.DEL(`${this[this.constructor._key].split("_")[2]}:latest`)
+				let deleteCert = await client.DEL(`${this[this.constructor._key]}:latest`)
 				console.log("deleteCert", deleteCert);
 	
 				// Return the number of removed values to the caller.

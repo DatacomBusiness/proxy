@@ -62,9 +62,9 @@ class Host extends Table{
 				console.log("cache", cache);
 
 				if(cache.host == _host){
-					host = await Host.get(cache.host);
+					let host = await Cached.get(cache.host);
 					console.log("cached host", host);
-					await cache.remove("Cache");
+					await host.remove("Cache");
 				}
 			}
 
