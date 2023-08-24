@@ -31,7 +31,7 @@ class Table{
 			}
 
 			var getPrefix = `${this.prototype.constructor.name}_${index}`
-			console.log("getPrefix", getPrefix);
+			// console.log("getPrefix", getPrefix);
 
 			let result = await client.HGETALL(
 				redisPrefix(getPrefix)
@@ -252,17 +252,20 @@ class Table{
 		// Remove an entry from this table.
 
 		try{
-			console.log("removing data for",this.constructor.name);
-			console.log("Removing from SET: ", `${this.constructor.name}_${data}`);
+			console.log("removing data for", this.constructor.name);
+			console.log("removing data for Key", this[this.constructor._key]);
+			
 			// Remove the index key from the tables members list.
 			let count
+
+			// Passing in the Cached string to process Cached items (data)
 			if(data) {
 				count = await client.DEL(
 					redisPrefix(`${this.constructor.name}_${data}`)
 				);
 
 			} else {
-				
+				// Delete the Host keys only and the host SET
 				let deleted = await client.SREM(
 					redisPrefix(this.constructor.name),
 					this[this.constructor._key]
@@ -274,6 +277,9 @@ class Table{
 					redisPrefix(`${this.constructor.name}_${this[this.constructor._key]}`)
 				);
 				console.log("count", count);
+
+				let deleteCert = await client.DEL(`${this[this.constructor._key].split("_")[2]}:latest`)
+				console.log("deleteCert", deleteCert);
 	
 				// Return the number of removed values to the caller.
 				return count;
