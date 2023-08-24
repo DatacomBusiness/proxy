@@ -11,7 +11,7 @@ const host = new Host()
 const socket = new SocketServerJson({
 	socketFile: conf.socketFile,
 	onData: async function(data, clientSocket) {
-		console.log("host controller data", data);
+		console.log("******************************************* host controller data *******************************************", data);
 		let host = await Host.lookUp(data['domain'])  || {host: 'none'};
 		console.log("host controller host", host);
 
