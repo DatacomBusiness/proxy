@@ -248,10 +248,10 @@ class Table{
 
 	async remove(data){
 		console.log("********Remove method called**********");
-		console.log("remove data", data); // undefined
 		// Remove an entry from this table.
 
 		try{
+			console.log("remove data", data); // undefined
 			console.log("removing data for", this.constructor.name);
 			console.log("removing data for Key", this[this.constructor._key]);
 			
@@ -259,10 +259,18 @@ class Table{
 			let count
 
 			// Passing in the Cached string to process Cached items (data)
-			if(data) {
+			if(data == "Cached") {
+				// Delete the Host keys only and the host SET
+				let deleted = await client.SREM(
+					redisPrefix(this.constructor.name),
+					this[this.constructor._key]
+				);
+				console.log("deleted", deleted);
+
 				count = await client.DEL(
 					redisPrefix(`${this.constructor.name}_${data}`)
 				);
+				console.log("count", count);
 
 			} else {
 				// Delete the Host keys only and the host SET
