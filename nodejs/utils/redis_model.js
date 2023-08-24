@@ -76,7 +76,7 @@ class Table{
 				redisPrefix(this.prototype.constructor.name)
 			);
 			console.log("listMembers", listMembers);
-			return listMembers
+			return listMembers.sort()
 
 		}catch(error){
 			throw error;
