@@ -52,16 +52,16 @@ class Host extends Table{
 
 			// Is called from routes?
 			let key = this[this.constructor._key]
-			console.log("key", key);
-			let constru = JSON.stringify(this[this.constructor])
-			console.log("constru", constru);
+			console.log("bustCache key", key);
 
 			console.log("_host", _host); // New host name
 			let cached = await Cached.listDetail();
-			console.log("61 cachedList", cached);
+			console.log("****** cachedList ******", cached);
+
 			for(let cache of cached){
+				console.log("cache", cache);
+				
 				if(cache.host == _host){
-					console.log("cache", cache);
 					host = await Host.get(cache.host);
 					console.log("cached host", host);
 					await cache.remove("Cache");
@@ -77,6 +77,7 @@ class Host extends Table{
 
 	static async add(...args){
 		try{
+			console.log("host add args", ...args);
 			let out = await super.add(...args)
 			await this.buildLookUpObj()
 
@@ -220,7 +221,7 @@ class Host extends Table{
 			}
 			console.log("place", place);
 			console.log("last_resort", last_resort);
-			
+
 			// After the tree has been traversed, see if we have leaf node to return. 
 			resolve(place['#record'])
 
