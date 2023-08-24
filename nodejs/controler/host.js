@@ -10,8 +10,9 @@ const host = new Host()
 
 const socket = new SocketServerJson({
 	socketFile: conf.socketFile,
-	onData: function(data, clientSocket) {
-		let host = Host.lookUp(data['domain'])  || {host: 'none'};
+	onData: async function(data, clientSocket) {
+		console.log("host controller data", data);
+		let host = await Host.lookUp(data['domain'])  || {host: 'none'};
 		console.log("host controller host", host);
 
 		for (const [key, value] of Object.entries(host)) {
