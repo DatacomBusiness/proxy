@@ -12,6 +12,7 @@ const socket = new SocketServerJson({
 	socketFile: conf.socketFile,
 	onData: function(data, clientSocket) {
 		let host = Host.lookUp(data['domain'])  || {host: 'none'};
+		console.log("host controller host", host);
 
 		for (const [key, value] of Object.entries(host)) {
 			host[key] = String(value);

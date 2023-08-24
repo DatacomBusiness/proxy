@@ -60,7 +60,7 @@ class Host extends Table{
 
 			for(let cache of cached){
 				console.log("cache", cache);
-				
+
 				if(cache.host == _host){
 					host = await Host.get(cache.host);
 					console.log("cached host", host);
@@ -199,7 +199,7 @@ class Host extends Table{
 			// Walk over each fragment of the host, from right to left
 			console.log("host.split('.').reverse()", host.split('.').reverse());
 			for(let fragment of host.split('.').reverse()){
-				console.log("fragment", fragment);
+				// console.log("fragment", fragment);
 	
 				// If a long wild card is found on this level, hold on to it
 				if(place['**']) last_resort = place['**'];
@@ -219,8 +219,8 @@ class Host extends Table{
 					
 				}
 			}
-			console.log("place", place);
-			console.log("last_resort", last_resort);
+			// console.log("place", place);
+			// console.log("last_resort", last_resort);
 
 			// After the tree has been traversed, see if we have leaf node to return. 
 			resolve(place['#record'])
