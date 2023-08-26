@@ -46,6 +46,8 @@ function setup {
 	# sudo luarocks install luasocket-unix
 	# sudo luarocks install lua-cjson
 
+	# apt-get upgrade -y
+
 	# echo "********************** Installed all software **********************"
 
 	# if [ -d /var/www/ ]; then
@@ -80,13 +82,13 @@ function setup {
 
 	# Setup git repo
 	cd /var/www
-	git clone --branch ian https://github.com/DatacomBusiness/proxy.git
+	# git clone --branch ian https://github.com/DatacomBusiness/proxy.git
 	# Used for replacing tempalte tags in settings files
 
 	# Enter dir
 	echo $PWD
 	cd ./proxy
-	echo $PWD
+	echo "$PWD after moving into proxy"
 
 	# source ~/secrets.sh
 	source ./ops/vars/variables.sh
@@ -115,28 +117,33 @@ function setup {
 
 	# echo '********************** nginx setup completed **********************'
 
-	#Modify Nginx files with fail2ban settings
-	sed -i -e '/http {/r ./ops/fail2ban/nginx-insert.conf' ./ops/nginx/nginx.conf
-	# sed '/pattern/a some text here' filename
-	sed -i -e '/location / {/r ./ops/fail2ban/000-proxy-insert.conf' ./ops/nginx/000-${SITE_NAME}.conf
+	# UNABLE TO GET THIS WORKING
+	# echo "$PWD before sed command"
+	# #Modify Nginx files with fail2ban settings
+	# sed -i '/http {/r ops/fail2ban/nginx-insert.conf' ops/nginx/nginx.conf
+	# # sed '/pattern/a some text here' filename
+	# sed -i '/location / {/r ops/fail2ban/000-proxy-insert.conf' ops/nginx/000-${SITE_NAME}.conf
 
-	# fil2ban filter
-	filter="$(cat ./ops/fail2ban/nginx-req-limit)"
-	sudo echo "$filter" | mo > /etc/fail2ban/filter.d/nginx-req-limit
+	# # fil2ban filter
+	# filter="$(cat ./ops/fail2ban/nginx-req-limit.conf)"
+	# sudo echo "$filter" | mo > /etc/fail2ban/filter.d/nginx-req-limit.conf
 
-	cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
-	jail_local="$(cat ./ops/fail2ban/jail.conf)"
-	sudo echo "$jail_local" | mo >> /etc/fail2ban/jail.local
+	# cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+	# jail_local="$(cat ./ops/fail2ban/jail.conf)"
+	# sudo echo "$jail_local" | mo >> /etc/fail2ban/jail.local
+
+	#Polulate log files
+	echo "" > /var/log/nginx/error.log
+	echo "" > /var/log/crontab/error.log
 
 	service fail2ban restart
-	fail2ban-client -d
+	# fail2ban-client -d
 
 	echo "********************** Installed Fail2ban **********************"
 
 	#Set up Crontab for restarting and logging
 	
-	crontab="$(cat ./ops/fail2ban/jail.conf)"
-	sudo echo "$crontab" | mo >> /etc/fail2ban/jail.local
+	crontab="$(cat ./ops/fail2ban/cron.conf)"
 	(crontab -l 2>/dev/null; "echo $crontab")| crontab -
 
 	echo "********************** Installed Crontab **********************"
