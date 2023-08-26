@@ -67,7 +67,10 @@ function setup {
 	if [ ! -d /etc/openresty/sites-enabled/ ]; then
 		mkdir /etc/openresty/sites-enabled/
 	fi
-	
+		if [ ! -d /var/www/${} ]; then
+		mkdir /etc/ssl/
+	fi
+
 	chmod -R 777 /var/log
 	chmod -R 777 /var/www
 	chmod -R 777 /etc/ssl/
