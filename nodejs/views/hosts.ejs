@@ -46,6 +46,7 @@
 		app.host.list(function(err, data){
 			if(err) return app.util.actionMessage(err, {type: 'danger'});	
 			if(data){
+				console.log("tableAJAX data", data);
 				$.each(data, function( key, value ) {
 					value['updated_on'] = moment(value['updated_on'], "x").fromNow();
 					value['targetssl'] = value['targetssl'] ? "https://" : "http://";
