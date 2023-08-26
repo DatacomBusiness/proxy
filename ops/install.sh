@@ -142,9 +142,12 @@ function setup {
 	echo "********************** Installed Fail2ban **********************"
 
 	#Set up Crontab for restarting and logging
-	
-	crontab="$(cat ./ops/fail2ban/cron.conf)"
-	(crontab -l 2>/dev/null; "echo $crontab")| crontab -
+	crontab -l > mycron
+	crontab_text="$(cat ./ops/fail2ban/cron.conf)"
+	$crontab_text >> mycron
+	crontab mycron
+	crontab -l
+
 
 	echo "********************** Installed Crontab **********************"
 			
