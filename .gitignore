@@ -84,6 +84,6 @@ Policyfile.lock.json
 ops/cookbooks/vendor
 
 secrets.json
-secrets.js
+ops/vars/secrets.js
 
 openresty/
