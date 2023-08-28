@@ -1,0 +1,15 @@
+/var/log/nginx/*.log {
+	daily
+	missingok
+	notifempty
+	rotate 10
+	compress
+	create 664 nobody tim
+	dateext
+	dateformat -%Y-%m-%d
+	dateyesterday
+	su tim tim
+	postrotate
+		/usr/local/bin/openresty -s reload
+	endscript
+}

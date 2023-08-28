@@ -20,7 +20,7 @@ function setup {
 	echo "********************** $(date "+%m%d%Y %T") : Starting Install script **********************"
 
 	# Install Openresty and dependencies
-	apt-get -y install --no-install-recommends wget gnupg ca-certificates gnupg1 gnupg2
+	apt-get -y install --no-install-recommends wget gnupg ca-certificates gnupg1 gnupg2 logrotate
 	wget -O - https://openresty.org/package/pubkey.gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/openresty.gpg
 	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/openresty.gpg] http://openresty.org/package/ubuntu $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/openresty.list > /dev/null
 	sudo apt-get update
@@ -81,7 +81,6 @@ function setup {
 	# Setup git repo
 	cd /var/www
 	git clone --branch ian https://github.com/DatacomBusiness/proxy.git
-	# Used for replacing tempalte tags in settings files
 
 	# Enter dir
 	cd ./proxy
@@ -136,6 +135,11 @@ function setup {
 	fail2ban-client -d
 
 	echo "********************** Installed Fail2ban **********************"
+
+	log_file="$(cat ./ops/logrotate/nginx)"
+	sudo echo "$log_file" > /etc/logrotate.g/nginx
+
+	echo '********************** rotatelog setup completed **********************'
 
 	#Set up Crontab for restarting and logging
 	crontab -l > mycron

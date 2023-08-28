@@ -100,10 +100,9 @@ class Table{
 
 	static async add(data){
 		// Add a entry to this redis table.
-		console.log("********Add method called**********");
+		console.log("******** Add method called **********", data);
 		try{
-			console.log("98 add data", data);
-			console.log("99 this.prototype.constructor",this.prototype.constructor);
+			// console.log("99 this.prototype.constructor",this.prototype.constructor);
 			// Validate the passed data by the keyMap schema.
 			data = objValidate.processKeys(this._keyMap, data);
 
@@ -117,12 +116,24 @@ class Table{
 				throw error;
 			}
 
-			// Add the key to the members for this redis table
-			await client.SADD(
-				redisPrefix(this.prototype.constructor.name),
-				data[this._key]
-			);
+			if(is_cache) { // Cache call and may not be a legitimate subdomain
+				// do not add to the smembers list until the domain is verified
 
+				// instead add to temp list
+				await client.SADD(
+					redisPrefix(proxy_Temphost),
+					data[this._key]
+				);
+			} else {
+				// Add the key to the members for this redis table
+				await client.SADD(
+					redisPrefix(this.prototype.constructor.name),
+					data[this._key]
+				);
+
+			}
+
+			
 			// Add the values for this entry.
 			for(let key of Object.keys(data)){
 				
