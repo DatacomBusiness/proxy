@@ -43,29 +43,45 @@
 
 		$('#tableAJAX').html('');
 		app.util.actionMessage('')
-		setInterval(app.host.list, 5000);
+		
 
 		app.host.list(function(err, data){
 			if(err) return app.util.actionMessage(err, {type: 'danger'});	
 			if(data){
-				// console.log("tableAJAX data", data); // array of all data
-				$.each(data, function( key, value ) {
-					value['updated_on'] = moment(value['updated_on'], "x").fromNow();
-					value['targetssl'] = value['targetssl'] ? "https://" : "http://";
-					value['forcessl'] = value['forcessl'] ? "https://" : "http://";
-					console.log("value", value);
+
+				let initial = () => {
+					console.log("initial getting run");
+					// console.log("tableAJAX data", data); // array of all data
+					$.each(data, function( key, value ) {
+						value['updated_on'] = moment(value['updated_on'], "x").fromNow();
+						value['targetssl'] = value['targetssl'] ? "https://" : "http://";
+						value['forcessl'] = value['forcessl'] ? "https://" : "http://";
+						console.log("value", value);
+
+						let host_row = ich.rowTemplate(value);
+						// console.log("host_row", host_row);
+						$('#tableAJAX').append(host_row);
+
+						console.log("$('#tableAJAX')", $('#tableAJAX'));
+					
+						
+					});
+				}
+				initial()
+
+				let individualUpdate = () => {
+					console.log("individualUpdate getting run");
 
 					let host_row = ich.rowTemplate(value);
-					console.log("host_row", host_row);
 
 					// Find element first
-					let element = $('#tableAJAX').find(host_row[0])
+					let element = $('#tableAJAX').find(host_row)
 					console.log("element1", element); // Should not be found
 					if(element.context) {
 						console.log("the element has context");
 						// Find and replace element
 						// element.append(host_row[0])
-						// $('#tableAJAX').remove(host_row);
+						$('#tableAJAX').replaceWith(host_row);
 						console.log("element2", element);
 
 					} else {
@@ -73,11 +89,9 @@
 						// Push it on the stack
 						$('#tableAJAX').append(host_row);
 					}
-
-					console.log("$('#tableAJAX')", $('#tableAJAX'));
-				
-					
-				});
+				}
+				setInterval(individualUpdate, 5000);
+			
 				app.util.actionMessage(actionMessage || '', {type: 'info'});
 				$('#tableAJAX').fadeIn('fast');
 			}else{
