@@ -59,11 +59,13 @@
 
 					// Find element first
 					let element = $('#tableAJAX').find(host_row[0])
-					console.log("element", element); // Should not be found
+					console.log("element1", element); // Should not be found
 					if(element.context) {
 						console.log("the element has context");
 						// Find and replace element
-						element.append(host_row[0])
+						// element.append(host_row[0])
+						$('#tableAJAX').append(host_row);
+						console.log("element2", element);
 
 					} else {
 						console.log("the element was not in the list");
