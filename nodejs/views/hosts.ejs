@@ -52,16 +52,15 @@
 					value['targetssl'] = value['targetssl'] ? "https://" : "http://";
 					value['forcessl'] = value['forcessl'] ? "https://" : "http://";
 
-					console.log("key", key);
 					console.log("value", value);
 					host_row = ich.rowTemplate(value);
 					console.log("host_row", host_row);
 					
 
 					// Find element first
-					let element = $('#tableAJAX').find(host_row)
+					let element = $('#tableAJAX').find(host_row[0])
 					console.log("element", element);
-					if(element) {
+					if(element.context) {
 						// Find and replace element
 						element.html(host_row)					
 					} else {
