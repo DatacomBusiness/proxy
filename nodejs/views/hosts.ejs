@@ -26,7 +26,7 @@
 		$(".editWindow input[name='edit_host']").val(btn.data('host'));
 
 		app.host.get(currentEditHost, function(error, data){
-			console.log(data)
+			console.log("app.host.get", data)
 			$.each( data.results, function( key, value ) {
 				if(typeof value == "boolean"){
 					$(".editWindow #"+ key +"-"+ value).prop('checked', true)
@@ -46,7 +46,7 @@
 		app.host.list(function(err, data){
 			if(err) return app.util.actionMessage(err, {type: 'danger'});	
 			if(data){
-				// console.log("tableAJAX data", data); array of all data
+				// console.log("tableAJAX data", data); // array of all data
 				$.each(data, function( key, value ) {
 					value['updated_on'] = moment(value['updated_on'], "x").fromNow();
 					value['targetssl'] = value['targetssl'] ? "https://" : "http://";
@@ -55,7 +55,7 @@
 					$('#tableAJAX').append(host_row);
 				});
 				app.util.actionMessage(actionMessage || '', {type: 'info'});
-				$('#tableAJAX').fadeIn('fast');
+				// $('#tableAJAX').fadeIn('fast');
 			}else{
 				app.util.actionMessage('No hosts...', {type: 'info'});
 			}
