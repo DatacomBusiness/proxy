@@ -97,7 +97,7 @@
 						}
 					})
 				}
-				setInterval(individualUpdate, 5000);
+				setInterval(individualUpdate(), 5000);
 			
 				app.util.actionMessage(actionMessage || '', {type: 'info'});
 				$('#tableAJAX').fadeIn('fast');
