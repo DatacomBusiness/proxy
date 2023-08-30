@@ -39,6 +39,7 @@
 	}
 
 	function tableAJAX(actionMessage){
+		console.log("actionMessage",actionMessage);
 
 		$('#tableAJAX').html('');
 		app.util.actionMessage('')
@@ -55,7 +56,6 @@
 
 					let host_row = ich.rowTemplate(value);
 					console.log("host_row", host_row);
-					
 
 					// Find element first
 					let element = $('#tableAJAX').find(host_row[0])
@@ -64,7 +64,7 @@
 						console.log("the element has context");
 						// Find and replace element
 						// element.append(host_row[0])
-						$('#tableAJAX').append(host_row);
+						$('#tableAJAX').remove(host_row);
 						console.log("element2", element);
 
 					} else {
