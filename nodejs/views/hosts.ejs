@@ -40,13 +40,13 @@
 
 	function tableAJAX(actionMessage){
 
-		$('#tableAJAX').html('').hide();
+		$('#tableAJAX').html('');
 		app.util.actionMessage('')
 
 		app.host.list(function(err, data){
 			if(err) return app.util.actionMessage(err, {type: 'danger'});	
 			if(data){
-				console.log("tableAJAX data", data);
+				// console.log("tableAJAX data", data); array of all data
 				$.each(data, function( key, value ) {
 					value['updated_on'] = moment(value['updated_on'], "x").fromNow();
 					value['targetssl'] = value['targetssl'] ? "https://" : "http://";
@@ -55,7 +55,7 @@
 					$('#tableAJAX').append(host_row);
 				});
 				app.util.actionMessage(actionMessage || '', {type: 'info'});
-				$('#tableAJAX').fadeIn('slow');
+				$('#tableAJAX').fadeIn('fast');
 			}else{
 				app.util.actionMessage('No hosts...', {type: 'info'});
 			}
@@ -98,6 +98,7 @@
 		});
 	});
 </script>
+<!-- The section is the left page form after the edit button has been clicked  -->
 <div class="row" style="display:none">
 	<div class="col-md-4">
 		<div class="panel panel-danger editWindow" style="display:none">
@@ -121,6 +122,7 @@
 			</div>
 		</div>
 
+		<!-- The section is the left page form to add new proxy -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<div class="panel-title">
@@ -186,6 +188,7 @@
 		</div>
 	</div>
 
+	<!-- Main list of Proxies  -->
 	<div class="col-md-8">
 		<div class="panel panel-default">
 			<div class="panel-heading">
