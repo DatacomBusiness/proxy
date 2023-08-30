@@ -60,13 +60,17 @@
 					// Find element first
 					let element = $('#tableAJAX').find(host_row)
 					console.log("element", element);
+					if(element) {
+						// Find and replace element
+						element.replaceWith("<h2>New heading</h2>")					
+					} else {
+						// Push it on the stack
+						// $('#tableAJAX').append(host_row);
+					}
 
-					element.replaceWith(host_row)
-
-					// Find and replace element
+					
 				
-					// Push it on the stack
-					// $('#tableAJAX').append(host_row);
+					
 				});
 				app.util.actionMessage(actionMessage || '', {type: 'info'});
 				// $('#tableAJAX').fadeIn('fast');
