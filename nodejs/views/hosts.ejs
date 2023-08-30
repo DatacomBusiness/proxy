@@ -58,7 +58,10 @@
 					console.log("host_row", host_row);
 
 					// Find element first
-					$('#tableAJAX').find(host_row).replaceWith(host_row)
+					let element = $('#tableAJAX').find(host_row)
+					console.log("element", element);
+
+					element.replaceWith(host_row)
 
 					// Find and replace element
 				
