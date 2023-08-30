@@ -56,7 +56,7 @@
 					console.log("value", value);
 					host_row = ich.rowTemplate(value);
 					console.log("host_row", host_row);
-					console.log("$('#tableAJAX')", $('#tableAJAX'));
+					
 
 					// Find element first
 					let element = $('#tableAJAX').find(host_row)
@@ -66,8 +66,10 @@
 						element.html(host_row)					
 					} else {
 						// Push it on the stack
-						// $('#tableAJAX').append(host_row);
+						$('#tableAJAX').append(host_row);
 					}
+
+					console.log("$('#tableAJAX')", $('#tableAJAX'));
 
 					
 				
