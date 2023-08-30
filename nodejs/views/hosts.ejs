@@ -51,6 +51,9 @@
 					value['updated_on'] = moment(value['updated_on'], "x").fromNow();
 					value['targetssl'] = value['targetssl'] ? "https://" : "http://";
 					value['forcessl'] = value['forcessl'] ? "https://" : "http://";
+
+					console.log("key", key);
+					console.log("value", value);
 					host_row = ich.rowTemplate(value);
 					console.log("host_row", host_row);
 
