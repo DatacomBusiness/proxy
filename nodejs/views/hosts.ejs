@@ -59,11 +59,11 @@
 					console.log("$('#tableAJAX')", $('#tableAJAX'));
 
 					// Find element first
-					let element = $('#tableAJAX').find(host_row[0])
+					let element = $('#tableAJAX').find(host_row)
 					console.log("element", element);
 					if(element) {
 						// Find and replace element
-						element.html("<tr>New heading</tr>")					
+						element.html(host_row)					
 					} else {
 						// Push it on the stack
 						// $('#tableAJAX').append(host_row);
