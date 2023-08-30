@@ -67,8 +67,7 @@
 						
 					});
 				}
-				initial()
-
+				
 				let individualUpdate = () => {
 					console.log("individualUpdate getting run");
 
@@ -82,13 +81,13 @@
 
 						// Find element first
 						let element = $('#tableAJAX').find(host_row)
-						console.log("element1", element); // Should not be found
+						console.log("element", element); // Should not be found
 						if(element.context) {
 							console.log("the element has context");
 							// Find and replace element
 							// element.append(host_row[0])
 							$('#tableAJAX').replaceWith(host_row);
-							console.log("element2", element);
+							// console.log("element2", element);
 
 						} else {
 							console.log("the element was not in the list");
@@ -97,7 +96,14 @@
 						}
 					})
 				}
-				setInterval(individualUpdate(), 5000);
+				
+				initial()
+				setTimeout(() => {
+					setInterval(() => {
+						console.log("setInterval executed");
+						individualUpdate()
+					}, 5000);
+				}, 5000);
 			
 				app.util.actionMessage(actionMessage || '', {type: 'info'});
 				$('#tableAJAX').fadeIn('fast');
