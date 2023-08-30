@@ -43,6 +43,7 @@
 
 		$('#tableAJAX').html('');
 		app.util.actionMessage('')
+		setInterval(app.host.list, 5000);
 
 		app.host.list(function(err, data){
 			if(err) return app.util.actionMessage(err, {type: 'danger'});	
@@ -64,7 +65,7 @@
 						console.log("the element has context");
 						// Find and replace element
 						// element.append(host_row[0])
-						$('#tableAJAX').remove(host_row);
+						// $('#tableAJAX').remove(host_row);
 						console.log("element2", element);
 
 					} else {
@@ -87,7 +88,6 @@
 
 	$(document).ready(function(){
 		tableAJAX(); //populate the table
-		setInterval(tableAJAX, 30000);
 
 		$('form.addHost').on('submit', function(){
 			event.preventDefault();
