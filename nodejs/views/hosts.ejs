@@ -51,10 +51,10 @@
 					value['updated_on'] = moment(value['updated_on'], "x").fromNow();
 					value['targetssl'] = value['targetssl'] ? "https://" : "http://";
 					value['forcessl'] = value['forcessl'] ? "https://" : "http://";
+					console.log("value", value);
 
-					// console.log("value", value);
-					// host_row = ich.rowTemplate(value);
-					// console.log("host_row", host_row);
+					let host_row = ich.rowTemplate(value);
+					console.log("host_row", host_row);
 					
 
 					// Find element first
