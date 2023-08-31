@@ -99,11 +99,11 @@
 				
 				initial()
 				setTimeout(() => {
-					setInterval(() => {
+					// setInterval(() => {
 						console.log("setInterval executed");
 						individualUpdate()
-					}, 5000);
-				}, 5000);
+					// }, 10000);
+				}, 10000);
 			
 				app.util.actionMessage(actionMessage || '', {type: 'info'});
 				$('#tableAJAX').fadeIn('fast');
@@ -262,8 +262,9 @@
 							<th class="hidden-xs">Updated</th>
 							<th>Actions</th>
 						</thead>
-						<tbody id="tableAJAX">
-							<!-- ajax loaded table -->
+						<tbody id="tableAJAX"> 
+							<!-- append the tr --> 
+							<!-- <tr ajax loaded table /tr>-->
 						</tbody>
 					</table>
 				</div>
