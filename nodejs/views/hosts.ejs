@@ -64,13 +64,24 @@
 						// console.log("tableRow",tableRow);
 
 						// console.log("$('#tableAJAX')", $('#tableAJAX'));
-					
-						
 					});
 				}
-				
-				let individualUpdate = () => {
-					console.log("individualUpdate getting run");
+								
+				initial()
+			
+				app.util.actionMessage(actionMessage || '', {type: 'info'});
+				$('#tableAJAX').fadeIn('fast');
+			}else{
+				app.util.actionMessage('No hosts...', {type: 'info'});
+			}
+		});
+
+		let individualUpdate = () => {
+			app.host.list(function(err, data){
+				if(err) return app.util.actionMessage(err, {type: 'danger'});	
+				if(data){
+					console.log("individualUpdate getting run"); // Not updating new domains that are registered
+					// Maybe need to get the list again... TODO
 
 					$.each(data, function( key, value ) {
 						value['updated_on'] = moment(value['updated_on'], "x").fromNow();
@@ -96,22 +107,23 @@
 							$('#tableAJAX').append(host_row);
 						}
 					})
+
+					app.util.actionMessage(actionMessage || '', {type: 'info'});
+					$('#tableAJAX').fadeIn('fast');
+
+				} else {
+					app.util.actionMessage('No hosts...', {type: 'info'});
 				}
-				
-				initial()
-				setTimeout(() => {
-					setInterval(() => {
-						console.log("setInterval executed");
-						individualUpdate()
-					}, 10000);
-				}, 10000);
-			
-				app.util.actionMessage(actionMessage || '', {type: 'info'});
-				$('#tableAJAX').fadeIn('fast');
-			}else{
-				app.util.actionMessage('No hosts...', {type: 'info'});
-			}
-		});
+			})
+		}
+
+		setTimeout(() => {
+			setInterval(() => {
+				console.log("setInterval executed");
+				individualUpdate()
+			}, 10000);
+		}, 10000);
+
 	}
 
 	$(document).ready(function(){
@@ -132,7 +144,7 @@
 			if($form.attr('isValid') === 'true'){
 				let date = Date.now()
 				var formdata = $form.serializeObject();
-				
+
 				if(formdata.targetPort) formdata.targetPort = Number(formdata.targetPort);
 				if(formdata.targetssl) formdata.targetssl = formdata.targetssl == 'true' ? true : false;
 				if(formdata.forcessl) formdata.forcessl = formdata.forcessl == 'true' ? true : false;
