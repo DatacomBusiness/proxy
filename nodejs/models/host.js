@@ -25,7 +25,7 @@ class Host extends Table{
 		'targetssl': {isRequired: false, default: false, type: 'boolean'},
 		'created_by': {isRequired: true, type: 'string', min: 3, max: 500},
 		'is_cache': {default: false, isRequired: false, type: 'boolean',},
-		'is_passthru': {default: false, isRequired: true, type: 'boolean',},
+		'is_passthru': {default: false, isRequired: false, type: 'boolean',},
 	}
 
 	static lookUpObj = {};
