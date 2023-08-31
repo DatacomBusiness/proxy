@@ -116,7 +116,7 @@ class Table{
 				throw error;
 			}
 
-			if(is_cache) { // Cache call and may not be a legitimate subdomain
+			if(data.is_cache) { // Cache call and may not be a legitimate subdomain
 				// do not add to the smembers list until the domain is verified
 
 				// instead add to temp list
