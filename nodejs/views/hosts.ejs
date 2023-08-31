@@ -119,9 +119,11 @@
 		console.log("document ready executed");
 
 		$('form.addHost').on('submit', function(){
+			
 			event.preventDefault();
 
 			$form = $(this);
+			console.log("New Host submitted", $form);
 
 			var action = $($form.find('button[type="submit"]')[0]).data('type')
 
@@ -146,6 +148,9 @@
 					tableAJAX("Added "+ formdata.host);
 					$form.trigger('reset');
 				})
+
+				let host_row = ich.rowTemplate(value);
+				$('#tableAJAX').append(host_row);
 
 				console.log("document ready finished");
 			}
