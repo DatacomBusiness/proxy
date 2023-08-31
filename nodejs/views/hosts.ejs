@@ -80,8 +80,9 @@
 			app.host.list(function(err, data){
 				if(err) return app.util.actionMessage(err, {type: 'danger'});	
 				if(data){
-					console.log("individualUpdate getting run"); // Not updating new domains that are registered
+					console.log("individualUpdate getting run data: ", data); // Not updating new domains that are registered
 					// Maybe need to get the list again... TODO
+					// 
 
 					$.each(data, function( key, value ) {
 						value['updated_on'] = moment(value['updated_on'], "x").fromNow();
@@ -95,14 +96,14 @@
 						let element = $('#tableAJAX').find(host_row[0])
 						// console.log("element", element);
 						if(element.context) {
-							// console.log("the element has context");
+							console.log("the element has context");
 							// Find and replace element
 							// element.append(host_row[0])
 							element.context.replaceWith(host_row[0]);
 							// console.log("element2", element);
 
 						} else {
-							// console.log("the element was not in the list");
+							console.log("the element was not in the list");
 							// Push it on the stack
 							$('#tableAJAX').append(host_row);
 						}

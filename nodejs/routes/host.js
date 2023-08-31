@@ -59,7 +59,7 @@ router.put('/:item(*)', async function(req, res, next){
 
 router.delete('/:item(*)', async function(req, res, next){
 	try{
-		onsole.log("router.delete req", req);
+		console.log("router.delete req", req);
 		let item = await Model.get(req.params.item);
 		let count = await item.remove();
 		console.log("router.delete item", item);
