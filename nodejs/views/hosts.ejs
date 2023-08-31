@@ -26,7 +26,7 @@
 		$(".editWindow input[name='edit_host']").val(btn.data('host'));
 
 		app.host.get(currentEditHost, function(error, data){
-			console.log("app.host.get", data)
+			// console.log("app.host.get", data)
 			$.each( data.results, function( key, value ) {
 				if(typeof value == "boolean"){
 					$(".editWindow #"+ key +"-"+ value).prop('checked', true)
@@ -39,7 +39,7 @@
 	}
 
 	function tableAJAX(actionMessage){
-		console.log("actionMessage",actionMessage);
+		// console.log("actionMessage",actionMessage);
 
 		$('#tableAJAX').html('');
 		app.util.actionMessage('')
@@ -50,18 +50,18 @@
 			if(data){
 
 				let initial = () => {
-					console.log("initial getting run");
+					// console.log("initial getting run");
 					// console.log("tableAJAX data", data); // array of all data
 					$.each(data, function( key, value ) {
 						value['updated_on'] = moment(value['updated_on'], "x").fromNow();
 						value['targetssl'] = value['targetssl'] ? "https://" : "http://";
 						value['forcessl'] = value['forcessl'] ? "https://" : "http://";
-						console.log("value", value);
+						// console.log("value", value);
 
 						let host_row = ich.rowTemplate(value);
-						console.log("host_row", host_row);
+						// console.log("host_row", host_row);
 						let tableRow = $('#tableAJAX').append(host_row);
-						console.log("tableRow",tableRow);
+						// console.log("tableRow",tableRow);
 
 						// console.log("$('#tableAJAX')", $('#tableAJAX'));
 					
@@ -76,22 +76,22 @@
 						value['updated_on'] = moment(value['updated_on'], "x").fromNow();
 						value['targetssl'] = value['targetssl'] ? "https://" : "http://";
 						value['forcessl'] = value['forcessl'] ? "https://" : "http://";
-						console.log("value", value);
+						// console.log("value", value);
 
 						let host_row = ich.rowTemplate(value);
 
 						// Find element first
 						let element = $('#tableAJAX').find(host_row[0])
-						console.log("element", element); // Should not be found
+						// console.log("element", element);
 						if(element.context) {
-							console.log("the element has context");
+							// console.log("the element has context");
 							// Find and replace element
 							// element.append(host_row[0])
 							element.context.replaceWith(host_row[0]);
 							// console.log("element2", element);
 
 						} else {
-							console.log("the element was not in the list");
+							// console.log("the element was not in the list");
 							// Push it on the stack
 							$('#tableAJAX').append(host_row);
 						}
@@ -100,10 +100,10 @@
 				
 				initial()
 				setTimeout(() => {
-					// setInterval(() => {
+					setInterval(() => {
 						console.log("setInterval executed");
 						individualUpdate()
-					// }, 10000);
+					}, 10000);
 				}, 10000);
 			
 				app.util.actionMessage(actionMessage || '', {type: 'info'});
@@ -116,6 +116,7 @@
 
 	$(document).ready(function(){
 		tableAJAX(); //populate the table
+		console.log("document ready executed");
 
 		$('form.addHost').on('submit', function(){
 			event.preventDefault();
@@ -145,6 +146,8 @@
 					tableAJAX("Added "+ formdata.host);
 					$form.trigger('reset');
 				})
+
+				console.log("document ready finished");
 			}
 		});
 	});

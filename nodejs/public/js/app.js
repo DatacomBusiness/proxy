@@ -196,9 +196,10 @@ app.host = (function(app){
 	}
 
 	function remove(args, callack){
-		console.log("app.host.remove caled", args);
+		// console.log("app.host.remove called", args);
+		// console.log("called the route to relete from redis and returns message");
 		app.api.delete('host/'+ args.host, function(error, data){
-			console.log("app.api.delete data callback", data);
+			// console.log("app.api.delete data callback", data);
 			callack(error, data);
 		})
 	}
@@ -226,20 +227,20 @@ app.util = (function(app){
 		$target = options.$target || $('div.actionMessage');
 		message = message || '';
 
-		console.log("message", message);
-		console.log("$target.html()", $target.html());
+		// console.log("message", message);
+		// console.log("$target.html()", $target.html());
 
 		if($target.html() === message) return;
 
 		if($target.html()){
-			console.log("element has HTML", $target.html());
+			// console.log("element has HTML", $target.html());
 			$target.slideUp('fast', function(){
 				$target.html('')
 				if(message) actionMessage(message, options);
 			})
 			return;
 		}else{
-			console.log("$target has no html",$target);
+			// console.log("$target has no html",$target);
 			// console.log("options", options);
 			if(options.type) $target.addClass('alert-' + options.type);
 			$target.html(message).slideDown('fast');
@@ -314,7 +315,7 @@ function formAJAX( btn, del ) {
 	var formData = $form.find( '[name]' ).serializeObject(); // builds query formDataing
 	var method = $form.attr('method') || 'post';
 
-	console.log('formAJAX method', method)
+	// console.log('formAJAX method', method)
 
 	if( !$form.validate(
 		{
@@ -327,7 +328,7 @@ function formAJAX( btn, del ) {
 	}
 
 	app.api[method]($form.attr( 'action' ), formData, function(error, data){
-		console.log("formAJAX data", data);
+		// console.log("formAJAX data", data);
 		tableAJAX( "Success" ); //re-populate table
 		eval( $form.attr( 'evalAJAX' ) ); //gets JS to run after completion
 	});
