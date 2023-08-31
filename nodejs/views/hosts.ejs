@@ -130,7 +130,9 @@
 			app.util.actionMessage('')
 
 			if($form.attr('isValid') === 'true'){
+				let date = Date.now()
 				var formdata = $form.serializeObject();
+				
 				if(formdata.targetPort) formdata.targetPort = Number(formdata.targetPort);
 				if(formdata.targetssl) formdata.targetssl = formdata.targetssl == 'true' ? true : false;
 				if(formdata.forcessl) formdata.forcessl = formdata.forcessl == 'true' ? true : false;
@@ -139,7 +141,7 @@
 				console.log("formdata", formdata);
 
 				let value = formdata;
-				let date = Date.now()
+				
 				value.updated_on= moment(date).fromNow();
 				value.targetssl = formdata['targetssl'] ? "https://" : "http://";
 				value.forcessl = formdata['forcessl'] ? "https://" : "http://";
