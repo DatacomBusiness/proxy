@@ -140,9 +140,9 @@
 
 				let value = formdata;
 				let date = Date.now()
-				value['updated_on'] = moment(date).fromNow();
-				value['targetssl'] = formdata['targetssl'] ? "https://" : "http://";
-				value['forcessl'] = formdata['forcessl'] ? "https://" : "http://";
+				value.updated_on= moment(date).fromNow();
+				value.targetssl = formdata['targetssl'] ? "https://" : "http://";
+				value.forcessl = formdata['forcessl'] ? "https://" : "http://";
 
 				console.log("valueData", value);
 
