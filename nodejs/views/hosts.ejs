@@ -59,10 +59,11 @@
 						console.log("value", value);
 
 						let host_row = ich.rowTemplate(value);
-						// console.log("host_row", host_row);
-						$('#tableAJAX').append(host_row);
+						console.log("host_row", host_row);
+						let tableRow = $('#tableAJAX').append(host_row);
+						console.log("tableRow",tableRow);
 
-						console.log("$('#tableAJAX')", $('#tableAJAX'));
+						// console.log("$('#tableAJAX')", $('#tableAJAX'));
 					
 						
 					});
@@ -86,7 +87,7 @@
 							console.log("the element has context");
 							// Find and replace element
 							// element.append(host_row[0])
-							$('#tableAJAX').replaceWith(host_row[0]);
+							element.context.replaceWith(host_row[0]);
 							// console.log("element2", element);
 
 						} else {
