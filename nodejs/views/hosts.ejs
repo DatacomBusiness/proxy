@@ -134,12 +134,13 @@
 				if(formdata.targetPort) formdata.targetPort = Number(formdata.targetPort);
 				if(formdata.targetssl) formdata.targetssl = formdata.targetssl == 'true' ? true : false;
 				if(formdata.forcessl) formdata.forcessl = formdata.forcessl == 'true' ? true : false;
+				formdata.updated_on = date
 
 				console.log("formdata", formdata);
 
-				let value;
+				let value = formdata;
 				let date = Date.now()
-				value['updated_on'] = moment(date, "x").fromNow();
+				value['updated_on'] = moment(date).fromNow();
 				value['targetssl'] = formdata['targetssl'] ? "https://" : "http://";
 				value['forcessl'] = formdata['forcessl'] ? "https://" : "http://";
 
