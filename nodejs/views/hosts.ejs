@@ -135,6 +135,16 @@
 				if(formdata.targetssl) formdata.targetssl = formdata.targetssl == 'true' ? true : false;
 				if(formdata.forcessl) formdata.forcessl = formdata.forcessl == 'true' ? true : false;
 
+				console.log("formData", formData);
+
+				let value;
+				value['updated_on'] = moment(formdata['updated_on'], "x").fromNow();
+				value['targetssl'] = formdata['targetssl'] ? "https://" : "http://";
+				value['forcessl'] = formdata['forcessl'] ? "https://" : "http://";
+
+				console.log("valueData", value);
+
+
 				app.host[action](formdata, function(error, data){
 					if(error){
 						console.log('error data',data)
