@@ -47,7 +47,8 @@
 
 			let host = actionMessage.split(" ")[1]
 			// Handle removing the item from the table-responsive
-			let element = $('#tableAJAX').contains(host)
+			let element = $(`tr:contains(${host})`)
+			element.css("background-color", "blue")
 			console.log("delete element contains host", element);
 		}
 		
@@ -113,6 +114,7 @@
 							// element.append(host_row[0])
 							element.context.replaceWith(host_row[0]);
 							element.addClass("myClass")
+							element.css("background-color", "blue")
 							// console.log("element2", element);
 
 						} else {
