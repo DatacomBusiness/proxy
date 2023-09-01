@@ -102,11 +102,15 @@
 						// console.log("value", value);
 
 						let host_row = ich.rowTemplate(value);
+						let element;
 
 						// Find element first
 						// let element = $('#tableAJAX').find(host_row[0])
 						// let element = $('#tableAJAX').contains(value.host)
-						let element = $(`tr:contains(${value.host})`)
+						let star = value.host.includes("*")
+
+						element = $(`tr:contains(://${value.host})`)
+
 						console.log("element", element);
 						if(element.length != 0) {
 							console.log("the element has context");
