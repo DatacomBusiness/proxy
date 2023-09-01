@@ -101,20 +101,14 @@
 						value['forcessl'] = value['forcessl'] ? "https://" : "http://";
 						// console.log("value", value);
 
-						let host_row = ich.rowTemplate(value);
-						let element;
-						console.log("host_row", host_row);
-
-						// Find element first
-						// let element = $('#tableAJAX').find(host_row[0])
-						// let element = $('#tableAJAX').contains(value.host)
-						let star = value.host.includes("*")
-
-						element = $(`tr:contains(://${value.host})`)
-
+						let element = $(`tr:contains(://${value.host})`)
 						console.log("element", element);
 						if(element.length != 0) {
 							console.log("the element has context");
+
+							let host_row = ich.rowTemplate(value);
+							console.log("host_row", host_row);
+
 							// Find and replace element
 							// element.append(host_row[0])
 							element[0].replaceWith(host_row[0]);
@@ -127,6 +121,10 @@
 						} else {
 							console.log("the element was not in the list, appending now");
 							console.log("$('#tableAJAX')", $('#tableAJAX'));
+
+							let host_row = ich.rowTemplate(value);
+							console.log("host_row", host_row);
+
 							let row = $('#tableAJAX').append(host_row[0]);
 							console.log("row", row);			
 						}
