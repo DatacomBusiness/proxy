@@ -101,13 +101,13 @@
 						// Find element first
 						let element = $('#tableAJAX').find(host_row[0])
 						if(element.context) {
-							element.context.addClass("myClass")
+							element.addClass("myClass")
 							console.log("the element has context");
 							console.log("element", element);
 							// Find and replace element
 							// element.append(host_row[0])
 							element.context.replaceWith(host_row[0]);
-							element.context.addClass("myClass")
+							element.addClass("myClass")
 							// console.log("element2", element);
 
 						} else {
@@ -138,7 +138,7 @@
 				console.log("setInterval executed");
 
 			}, 10000);
-		}, 10000);
+		}, 1000);
 
 	}
 
