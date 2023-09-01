@@ -127,7 +127,8 @@
 
 						} else {
 							console.log("the element was not in the list, appending now");
-							let row = $('#tableAJAX').append(host_row);
+							console.log("$('#tableAJAX')", $('#tableAJAX'));
+							let row = $('#tableAJAX').children.append(host_row);
 							console.log("row", row);					
 						}
 					})
