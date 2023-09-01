@@ -123,7 +123,7 @@
 							let host_row = ich.rowTemplate(value);
 							console.log("host_row", host_row);
 
-							let row = $('#tableAJAX').push(host_row);
+							let row = $(host_row).appendTo("#tableAJAX");
 							console.log("row", row);			
 						}
 					})
