@@ -49,6 +49,7 @@
 			// Handle removing the item from the table-responsive
 			let element = $(`tr:contains(${host})`)
 			element.css("background-color", "blue")
+			element.removeClass("marked")
 			console.log("delete element contains host", element);
 		}
 		
