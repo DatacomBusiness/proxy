@@ -42,7 +42,7 @@
 		// console.log("actionMessage",actionMessage);
 
 		app.util.actionMessage('')
-		if(actionMessage.includes("delete")) {
+		if(actionMessage && actionMessage.includes("delete")) {
 			console.log("It includes the word delete");
 			// Handle removing the item from the table-responsive
 			let element = $('#tableAJAX').find()
