@@ -73,8 +73,6 @@
 						// console.log("host_row", host_row);
 						let tableRow = $('#tableAJAX').append(host_row);
 						// console.log("tableRow",tableRow);
-
-						// console.log("$('#tableAJAX')", $('#tableAJAX'));
 					});
 
 					app.util.actionMessage(actionMessage || '', {type: 'info'});
@@ -110,7 +108,6 @@
 							console.log("host_row", host_row);
 
 							// Find and replace element
-							// element.append(host_row[0])
 							element[0].replaceWith(host_row[0]);
 							let elem2 = $(`tr:contains(://${value.host})`)
 							elem2.addClass("marked")
@@ -126,7 +123,7 @@
 							let host_row = ich.rowTemplate(value);
 							console.log("host_row", host_row);
 
-							let row = $('#tableAJAX').append(host_row[0]);
+							let row = $('#tableAJAX').append(host_row);
 							console.log("row", row);			
 						}
 					})
