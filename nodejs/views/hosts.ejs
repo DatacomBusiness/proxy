@@ -85,7 +85,6 @@
 			});
 		}
 
-
 		let individualUpdate = () => {
 			// Manages the table based on adding and deleting hosts
 			app.host.list(function(err, data){
@@ -128,8 +127,8 @@
 
 						} else {
 							console.log("the element was not in the list, appending now");
-							// Push it on the stack
-							$('#tableAJAX').add(host_row);
+							let row = $('#tableAJAX').append(host_row);
+							console.log("row", row);					
 						}
 					})
 					// If the item exists on the tree and is not present in the approved_list, delete it from the tree
@@ -142,7 +141,7 @@
 							console.log("the element does not have marked class");
 							// find previos element and call scrollIntoView
 							console.log("$(this) gonna remove", $(this));
-							
+
 							$(this).remove()
 						} else {
 							$(this).removeClass("marked")
