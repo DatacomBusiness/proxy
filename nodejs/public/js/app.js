@@ -308,7 +308,7 @@ $( document ).ready( function () {
 	});
 });
 
-//ajax form submit
+//ajax form submit - Delete
 function formAJAX( btn, del ) {
 	event.preventDefault(); // avoid to execute the actual submit of the form.
 	var $form = $(btn).closest( '[action]' ); // gets the 'form' parent

@@ -41,16 +41,21 @@
 	function tableAJAX(actionMessage){
 		// console.log("actionMessage",actionMessage);
 
-		$('#tableAJAX').html('');
 		app.util.actionMessage('')
+		if(actionMessage.includes("delete")) {
+			console.log("It includes the word delete");
+			// Handle removing the item from the table-responsive
+			let element = $('#tableAJAX').find()
+			console.log("delete element", element);
+		}
 		
+		let initial = () => {
+			// Populate the entire table initially with redis data
+			console.log("initial getting run");
+			app.host.list(function(err, data){
+				if(err) return app.util.actionMessage(err, {type: 'danger'});	
+				if(data){
 
-		app.host.list(function(err, data){
-			if(err) return app.util.actionMessage(err, {type: 'danger'});	
-			if(data){
-
-				let initial = () => {
-					// console.log("initial getting run");
 					// console.log("tableAJAX data", data); // array of all data
 					$.each(data, function( key, value ) {
 						value['updated_on'] = moment(value['updated_on'], "x").fromNow();
@@ -65,18 +70,18 @@
 
 						// console.log("$('#tableAJAX')", $('#tableAJAX'));
 					});
+
+					app.util.actionMessage(actionMessage || '', {type: 'info'});
+					$('#tableAJAX').fadeIn('fast');
+				}else{
+					app.util.actionMessage('No hosts...', {type: 'info'});
 				}
-								
-				initial()
-			
-				app.util.actionMessage(actionMessage || '', {type: 'info'});
-				$('#tableAJAX').fadeIn('fast');
-			}else{
-				app.util.actionMessage('No hosts...', {type: 'info'});
-			}
-		});
+			});
+		}
+
 
 		let individualUpdate = () => {
+			// Manages the table based on adding and deleting hosts
 			app.host.list(function(err, data){
 				if(err) return app.util.actionMessage(err, {type: 'danger'});	
 				if(data){
@@ -96,12 +101,13 @@
 						// Find element first
 						let element = $('#tableAJAX').find(host_row[0])
 						if(element.context) {
+							element.context.addClass("myClass")
 							console.log("the element has context");
 							console.log("element", element);
 							// Find and replace element
 							// element.append(host_row[0])
 							element.context.replaceWith(host_row[0]);
-							element.addClass("myClass")
+							element.context.addClass("myClass")
 							// console.log("element2", element);
 
 						} else {
@@ -120,27 +126,37 @@
 			})
 		}
 
+		var counter = 0
 		setTimeout(() => {
+
+			if(counter==0) initial()
+			counter++
+
 			setInterval(() => {
+				
+				if(counter==1) individualUpdate()
 				console.log("setInterval executed");
-				individualUpdate()
+
 			}, 10000);
 		}, 10000);
 
 	}
 
 	$(document).ready(function(){
+
+		$('#tableAJAX').html(''); // Clear the table
 		tableAJAX(); //populate the table
 		console.log("document ready executed");
 
 		$('form.addHost').on('submit', function(){
+			console.log("addHost submit button pushed");
 			
 			event.preventDefault();
 
 			$form = $(this);
 			console.log("New Host submitted", $form);
 
-			var action = $($form.find('button[type="submit"]')[0]).data('type')
+			var action = $($form.find('button[type="submit"]')[0]).data('type') // add
 
 			app.util.actionMessage('')
 
@@ -149,6 +165,7 @@
 				console.log("date", date);
 				let momdate = moment(date).fromNow();
 				console.log("momdate", momdate);
+
 				var formdata = $form.serializeObject();
 
 				if(formdata.targetPort) formdata.targetPort = Number(formdata.targetPort);
@@ -160,7 +177,7 @@
 
 				let value = formdata;
 				
-				value.updated_on = momdate;
+				// value.updated_on = momdate;
 				value.targetssl = formdata['targetssl'] ? "https://" : "http://";
 				value.forcessl = formdata['forcessl'] ? "https://" : "http://";
 
@@ -179,6 +196,9 @@
 					app.util.actionMessage(data.message || 'Error!', {type: 'info'});
 					tableAJAX("Added "+ formdata.host);
 					$form.trigger('reset');
+
+					console.log("host was added");
+
 				})
 
 				let host_row = ich.rowTemplate(value);
