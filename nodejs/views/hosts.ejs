@@ -95,7 +95,6 @@
 					// Compare redis with current list. if redis has more then append to list. if redis has less, then find it and remove it.
 					// tag each element in the <tr /> with something to identify it as valid. Loop over all of them and remove all who are not valid, then remove the tags.
 
-					let approved_list = []
 					$.each(data, function( key, value ) {
 						value['updated_on'] = moment(value['updated_on'], "x").fromNow();
 						value['targetssl'] = value['targetssl'] ? "https://" : "http://";
@@ -128,14 +127,14 @@
 						} else {
 							console.log("the element was not in the list, appending now");
 							console.log("$('#tableAJAX')", $('#tableAJAX'));
-							let row = $('#tableAJAX')[0].insertRow(host_row);
-							console.log("row", row);					
+							let row = $('#tableAJAX').append(host_row[0]);
+							console.log("row", row);			
 						}
 					})
-					// If the item exists on the tree and is not present in the approved_list, delete it from the tree
+					// If the item exists on the tree and doesnt have marked class, delete it from the tree
 					$( "#tableAJAX tr" ).each(function( index, val ) {
 						// console.log("each in tableAJAX", index);
-						// console.log("val in tableAJAX", val);
+						console.log("val in tableAJAX", val);
 						// console.log("this in tableAJAX", $(this));
 						// console.log( index + ": " + $( this ).text() );
 						if(!$(this).hasClass("marked")) {
@@ -156,6 +155,9 @@
 				} else {
 					app.util.actionMessage('No hosts...', {type: 'info'});
 				}
+				setTimeout(() => {
+					actionMessage = ""
+				}, 5000);
 			})
 		}
 
