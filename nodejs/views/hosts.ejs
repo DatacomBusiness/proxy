@@ -116,10 +116,10 @@
 							console.log("the element has context");
 							// Find and replace element
 							// element.append(host_row[0])
-							element[0].replaceWith(host_row[0]);
-							element.addClass("myClass")
+							let elem2 = element[0].replaceWith(host_row[0]);
+							elem2.addClass("myClass")
 							// element.css("background-color", "blue")
-							console.log("element2", element);
+							console.log("element2", elem2);
 
 						} else {
 							console.log("the element was not in the list, appending now");
