@@ -44,12 +44,16 @@
 		app.util.actionMessage('')
 		if(actionMessage && actionMessage.includes("delete")) {
 			console.log("It includes the word delete");
+
+			let host = actionMessage.split(" ")[1]
 			// Handle removing the item from the table-responsive
-			let element = $('#tableAJAX').find()
+			let element = $('#tableAJAX').find("tr").textContent.includes(host)
 			console.log("delete element", element);
 		}
 		
 		let initial = () => {
+			$('#tableAJAX').html(''); // Clear the table
+			
 			// Populate the entire table initially with redis data
 			console.log("initial getting run");
 			app.host.list(function(err, data){
@@ -144,7 +148,6 @@
 
 	$(document).ready(function(){
 
-		$('#tableAJAX').html(''); // Clear the table
 		tableAJAX(); //populate the table
 		console.log("document ready executed");
 
