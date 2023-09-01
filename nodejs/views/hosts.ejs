@@ -140,6 +140,9 @@
 						// console.log( index + ": " + $( this ).text() );
 						if(!$(this).hasClass("marked")) {
 							console.log("the element does not have marked class");
+							// find previos element and call scrollIntoView
+							console.log("$(this) gonna remove", $(this));
+							
 							$(this).remove()
 						} else {
 							$(this).removeClass("marked")
@@ -169,8 +172,15 @@
 
 			}, 10000);
 		}, 1000);
-
 	}
+
+		var scrollIntoView = (elem) => {
+			// find element on page
+			console.log("elem", elem);
+			const element = document.getElementById("content");
+
+			element.scrollIntoView();
+		}
 
 	$(document).ready(function(){
 
