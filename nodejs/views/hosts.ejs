@@ -132,6 +132,8 @@
 					})
 					// If the item exists on the tree and is not present in the approved_list, delete it from the tree
 					$( "#tableAJAX" ).each(function( index ) {
+						console.log("each in tableAJAX", index);
+						nsole.log("this in tableAJAX", $(this));
 						console.log( index + ": " + $( this ).text() );
 						if(!index.hasClass("marked")) {
 							console.log("the element does not have marked class");
