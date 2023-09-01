@@ -105,7 +105,8 @@
 
 						// Find element first
 						// let element = $('#tableAJAX').find(host_row[0])
-						let element = $('#tableAJAX').contains(value.host)
+						// let element = $('#tableAJAX').contains(value.host)
+						let element = $(`tr:contains(${value.host})`)
 						if(element.context) {
 							element.addClass("myClass")
 							console.log("the element has context");
