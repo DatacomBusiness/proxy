@@ -107,9 +107,9 @@
 						// let element = $('#tableAJAX').find(host_row[0])
 						// let element = $('#tableAJAX').contains(value.host)
 						let element = $(`tr:contains(${value.host})`)
+						console.log("element", element);
 						if(element.length != 0) {
 							console.log("the element has context");
-							console.log("element", element);
 							// Find and replace element
 							// element.append(host_row[0])
 							element[0].replaceWith(host_row[0]);
