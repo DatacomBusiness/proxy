@@ -39,7 +39,7 @@
 	}
 
 	function tableAJAX(actionMessage){
-		// console.log("actionMessage",actionMessage);
+		console.log("actionMessage",actionMessage);
 
 		app.util.actionMessage('')
 		if(actionMessage && actionMessage.includes("delete")) {
@@ -53,7 +53,7 @@
 		
 		let initial = () => {
 			$('#tableAJAX').html(''); // Clear the table
-			
+
 			// Populate the entire table initially with redis data
 			console.log("initial getting run");
 			app.host.list(function(err, data){
