@@ -124,7 +124,8 @@
 							console.log("host_row", host_row);
 
 							let row = $(host_row).appendTo("#tableAJAX");
-							console.log("row", row);			
+							console.log("row", row);
+							row.addClass("marked")		
 						}
 					})
 					// If the item exists on the tree and doesnt have marked class, delete it from the tree
