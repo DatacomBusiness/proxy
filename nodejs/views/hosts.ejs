@@ -116,7 +116,8 @@
 							console.log("the element has context");
 							// Find and replace element
 							// element.append(host_row[0])
-							let elem2 = element[0].replaceWith(host_row[0]);
+							element[0].replaceWith(host_row[0]);
+							let elem2 = $(`tr:contains(://${value.host})`)
 							elem2.addClass("myClass")
 							// element.css("background-color", "blue")
 							console.log("element2", elem2);
