@@ -104,6 +104,7 @@
 
 						let host_row = ich.rowTemplate(value);
 						let element;
+						console.log("host_row", host_row);
 
 						// Find element first
 						// let element = $('#tableAJAX').find(host_row[0])
@@ -127,7 +128,7 @@
 						} else {
 							console.log("the element was not in the list, appending now");
 							// Push it on the stack
-							$('#tableAJAX').append(host_row[0]);
+							$('#tableAJAX').append(host_row);
 						}
 					})
 					// If the item exists on the tree and is not present in the approved_list, delete it from the tree
