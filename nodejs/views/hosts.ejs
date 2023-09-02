@@ -187,7 +187,7 @@
 				if(counter==1) tableAJAX().individualUpdate()
 				console.log("setInterval executed");
 
-			}, 10000);
+			}, 20000);
 		}, 1000);
 
 		$('form.addHost').on('submit', function(){
@@ -213,8 +213,7 @@
 				if(formdata.targetPort) formdata.targetPort = Number(formdata.targetPort);
 				if(formdata.targetssl) formdata.targetssl = formdata.targetssl == 'true' ? true : false;
 				if(formdata.forcessl) formdata.forcessl = formdata.forcessl == 'true' ? true : false;
-				formdata.updated_on = momdate
-
+				
 				console.log("formdata", formdata);
 
 				let value = formdata;
@@ -225,7 +224,7 @@
 
 				console.log("valueData", value);
 
-
+				formdata.updated_on = date
 				app.host[action](formdata, function(error, data){
 					if(error){
 						console.log('error data',data)
