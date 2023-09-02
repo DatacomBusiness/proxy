@@ -196,7 +196,7 @@ app.host = (function(app){
 	}
 
 	function remove(args, callack){
-		// console.log("app.host.remove called", args);
+		console.log("app.host.remove called", args);
 		// console.log("called the route to relete from redis and returns message");
 		app.api.delete('host/'+ args.host, function(error, data){
 			// console.log("app.api.delete data callback", data);
