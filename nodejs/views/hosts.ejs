@@ -141,6 +141,7 @@
 							// find previos element and call scrollIntoView
 							console.log("$(this) gonna remove", $(this));
 							$(this).remove()
+							console.log("lastElem", lastElem);
 							if(lastElem.length > 0) lastElem.slice(-1).scrollIntoView()
 						} else {
 							$(this).removeClass("marked")
