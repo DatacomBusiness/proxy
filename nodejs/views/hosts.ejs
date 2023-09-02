@@ -142,8 +142,8 @@
 							console.log("$(this) gonna remove", $(this));
 							$(this).remove()
 							console.log("lastElem", lastElem);
-							console.log("lastElem.slice(-1)", lastElem.slice(-1));
-							if(lastElem.length > 0) lastElem.slice(-1)[0].scrollIntoView()
+							console.log("lastElem.slice(-1)", lastElem.slice(-1)[0][0]);
+							if(lastElem.length > 0) lastElem.slice(-1)[0][0].scrollIntoView()
 						} else {
 							$(this).removeClass("marked")
 							lastElem.push($(this))
