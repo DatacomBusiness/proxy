@@ -216,7 +216,7 @@
 				
 				console.log("formdata", formdata);
 
-				let value = formdata;
+				let value = JSON.parse(JSON.stringify(formdata));
 				
 				// value.updated_on = momdate;
 				value.targetssl = formdata['targetssl'] ? "https://" : "http://";
