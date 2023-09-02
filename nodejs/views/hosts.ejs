@@ -50,6 +50,7 @@
 			let element = $(`tr:contains(${host})`)
 			element.css("background-color", "blue")
 			element.removeClass("marked")
+			element.remove()
 			console.log("delete element contains host", element);
 		}
 		
@@ -168,13 +169,6 @@
 		}
 	}
 
-	var scrollIntoView = (elem) => {
-		// find element on page
-		console.log("elem", elem);
-		const element = document.getElementById("content");
-
-		element.scrollIntoView();
-	}
 
 	$(document).ready(function(){
 
