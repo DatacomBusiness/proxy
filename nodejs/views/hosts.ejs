@@ -179,12 +179,12 @@
 		var counter = 0
 		setTimeout(() => {
 
-			if(counter==0) tableAJAX.initial()
+			if(counter==0) tableAJAX().initial()
 			counter++
 
 			setInterval(() => {
 				
-				if(counter==1) tableAJAX.individualUpdate()
+				if(counter==1) tableAJAX().individualUpdate()
 				console.log("setInterval executed");
 
 			}, 10000);
