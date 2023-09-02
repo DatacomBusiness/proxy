@@ -48,7 +48,7 @@
 			let host = actionMessage.split(" ")[1]
 			// Handle removing the item from the table-responsive
 			let element = $(`tr:contains(${host})`)
-			element.css("background-color", "blue")
+			// element.css("background-color", "blue")
 			element.removeClass("marked")
 			element.remove()
 			console.log("delete element contains host", element);
@@ -213,7 +213,7 @@
 				if(formdata.targetPort) formdata.targetPort = Number(formdata.targetPort);
 				if(formdata.targetssl) formdata.targetssl = formdata.targetssl == 'true' ? true : false;
 				if(formdata.forcessl) formdata.forcessl = formdata.forcessl == 'true' ? true : false;
-				formdata.updated_on = date
+				formdata.updated_on = momdate
 
 				console.log("formdata", formdata);
 
