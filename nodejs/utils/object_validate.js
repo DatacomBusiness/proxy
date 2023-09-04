@@ -24,6 +24,7 @@ function processKeys(map, data, partial){
 	data["targetPort"] = Number(data["targetPort"])
 	data["targetssl"] = Boolean(data["targetssl"])
 	data["forcessl"] = Boolean(data["forcessl"])
+	data["is_passthru"] = Boolean(data["is_passthru"])
 	
 	// console.log("processKeys data2", data);
 
