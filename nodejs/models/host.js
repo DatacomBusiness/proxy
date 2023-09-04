@@ -35,7 +35,7 @@ class Host extends Table{
 		console.log("********addCache method called**********");
 		try{
 			console.log("adding to redis host.js, parentOBJ", parentOBJ);
-			onsole.log("adding to redis host.js, host", host);
+			console.log("adding to redis host.js, host", host);
 			await this.add({...parentOBJ, host, is_cache: true, targetssl: false}, true).catch(err => {console.log("this.add err", JSON.stringify(err));})
 			await Cached.add({
 				host: host,
