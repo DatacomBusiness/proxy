@@ -25,7 +25,7 @@ class Host extends Table{
 		'targetssl': {isRequired: false, default: false, type: 'boolean'},
 		'created_by': {isRequired: true, type: 'string', min: 3, max: 500},
 		'is_cache': {default: false, isRequired: false, type: 'boolean',},
-		'is_passthru': {default: false, isRequired: false, type: 'boolean',},
+		// 'is_passthru': {default: false, isRequired: false, type: 'boolean',},
 	}
 
 	static lookUpObj = {};
@@ -34,6 +34,8 @@ class Host extends Table{
 	static async addCache(host, parentOBJ){
 		console.log("********addCache method called**********");
 		try{
+			console.log("adding to redis host.js, parentOBJ", parentOBJ);
+			onsole.log("adding to redis host.js, host", host);
 			await this.add({...parentOBJ, host, is_cache: true, targetssl: false}, true).catch(err => {console.log("this.add err", JSON.stringify(err));})
 			await Cached.add({
 				host: host,
