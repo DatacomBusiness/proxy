@@ -34,8 +34,8 @@ class Host extends Table{
 	static async addCache(host, parentOBJ){
 		console.log("********addCache method called**********");
 		try{
-			console.log("adding to redis host.js, parentOBJ", parentOBJ);
-			console.log("adding to redis host.js, host", host);
+			console.log("adding to redis host.js, parentOBJ", parentOBJ); // url matching wildcards
+			console.log("adding to redis host.js, host", host); // url entered
 			await this.add({...parentOBJ, host, is_cache: true, targetssl: false}, true).catch(err => {console.log("this.add err", JSON.stringify(err));})
 			await Cached.add({
 				host: host,

@@ -152,6 +152,7 @@ class Table{
 			// return the created redis entry as entry instance.
 			return await this.get(data[this._key]);
 		} catch(error){
+			console.log("redis_model add function error", error);
 			throw error;
 		}
 	}
