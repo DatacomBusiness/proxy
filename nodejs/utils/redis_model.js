@@ -11,7 +11,7 @@ function redisPrefix(key){
 	// console.log("redisPrefix conf", conf);
 	// console.log("redisPrefix key", key);
 	let response = `${conf.redis.prefix}${key}`
-	console.log("redisPrefix response", response);
+	// console.log("redisPrefix response", response);
 	return response;
 }
 
@@ -75,9 +75,9 @@ class Table{
 			let listMembers = await client.SMEMBERS(
 				redisPrefix(this.prototype.constructor.name)
 			);
-			console.log("listMembers", listMembers);
+			// console.log("listMembers", listMembers);
 			listMembers = listMembers.sort()
-			console.log("listMembers", listMembers);
+			// console.log("listMembers", listMembers);
 
 			return listMembers.sort()
 
