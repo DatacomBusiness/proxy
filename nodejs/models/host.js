@@ -25,7 +25,7 @@ class Host extends Table{
 		'targetssl': {isRequired: false, default: false, type: 'boolean'},
 		'created_by': {isRequired: true, type: 'string', min: 3, max: 500},
 		'is_cache': {default: false, isRequired: false, type: 'boolean',},
-		// 'is_passthru': {default: false, isRequired: false, type: 'boolean',},
+		'is_passthru': {default: false, isRequired: false, type: 'boolean',},
 	}
 
 	static lookUpObj = {};
@@ -200,7 +200,7 @@ class Host extends Table{
 			let last_resort = {};
 	
 			// Walk over each fragment of the host, from right to left
-			console.log("host.split('.').reverse()", host.split('.').reverse());
+			// console.log("host.split('.').reverse()", host.split('.').reverse());
 			for(let fragment of host.split('.').reverse()){
 				// console.log("fragment", fragment);
 	
