@@ -130,11 +130,11 @@ class Host extends Table{
 
 				// Loop over all the hosts in the redis.
 				for(let host of await this.list()){
-					console.log("\n buildLookUpObj host", host);
+					// console.log("\n buildLookUpObj host", host);
 
 					// Spit the hosts on "." into its fragments .
 					let fragments = host.split('.');
-					console.log("buildLookUpObj fragments", fragments);
+					// console.log("buildLookUpObj fragments", fragments);
 
 					// Hold a pointer to the root of the lookup tree.
 					let pointer = this.lookUpObj;
