@@ -121,7 +121,7 @@ class Table{
 
 				// instead add to temp list
 				await client.SADD(
-					redisPrefix(proxy_Temphost),
+					redisPrefix(this.prototype.constructor.name), // TODO, place the cached domain in a separate list for filtering out bad domains
 					data[this._key]
 				);
 			} else {
@@ -133,7 +133,6 @@ class Table{
 
 			}
 
-			
 			// Add the values for this entry.
 			for(let key of Object.keys(data)){
 				
