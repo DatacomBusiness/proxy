@@ -138,7 +138,7 @@ function setup {
 	echo "********************** Installed Fail2ban **********************"
 
 	log_file="$(cat ./ops/logrotate/nginx.conf)"
-	sudo echo "$log_file" > /etc/logrotate.g/nginx
+	sudo echo "$log_file" > /etc/logrotate.d/nginx
 
 	echo '********************** rotatelog setup completed **********************'
 
