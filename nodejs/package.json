@@ -2,12 +2,11 @@
   "name": "proxy-api",
   "version": "1.0.0",
   "private": true,
-  "author": [
+  "author":
     {
       "name": "William Mantly",
       "email": "wmantly@gmail.com"
-    }
-  ],
+    },
   "scripts": {
     "start": "node ./bin/www"
   },

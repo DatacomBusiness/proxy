@@ -202,7 +202,7 @@ class Host extends Table{
 			// Walk over each fragment of the host, from right to left
 			// console.log("host.split('.').reverse()", host.split('.').reverse());
 			for(let fragment of host.split('.').reverse()){
-				console.log("fragment", fragment);
+				// console.log("fragment", fragment);
 	
 				// If a long wild card is found on this level, hold on to it
 				if(place['**']) last_resort = place['**'];
