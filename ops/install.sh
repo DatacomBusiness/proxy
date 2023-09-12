@@ -6,6 +6,7 @@ HOW TO USE THIS FILE.
 nano this file (install.sh) in the users home directory. Execute (source install.sh) as sudo and enter sudo password.
 Make sure you are the owner of this file
 Errors and report logs will be in the LOGFILE listed below.
+Also, hit the enter key when it gets stuck.
 We will take care fo the rest. :)
 
 comment
@@ -136,7 +137,7 @@ function setup {
 
 	echo "********************** Installed Fail2ban **********************"
 
-	log_file="$(cat ./ops/logrotate/nginx)"
+	log_file="$(cat ./ops/logrotate/nginx.conf)"
 	sudo echo "$log_file" > /etc/logrotate.g/nginx
 
 	echo '********************** rotatelog setup completed **********************'
