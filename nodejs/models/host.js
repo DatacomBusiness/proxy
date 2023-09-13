@@ -182,7 +182,7 @@ class Host extends Table{
 	
 			// Hold a pointer to the root of the look up tree
 			let place = this.lookUpObj;
-			console.log("this.lookUpObj", this.lookUpObj);
+			// console.log("this.lookUpObj", this.lookUpObj);
 	
 			// Get Host Prefix
 			// console.log("this.super.redisPrefix(this.prototype.constructor.name))", redisPrefix(this.prototype.constructor.name)); // works

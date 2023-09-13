@@ -41,9 +41,8 @@ function setup {
 
 	sudo luarocks install lua-resty-auto-ssl
 	sudo luarocks install lua-resty-socket
-	sudo luarocks install luasocket
-	sudo luarocks install luasocket-unix
 	sudo luarocks install lua-cjson
+	sudo luarocks install luaposix
 
 	apt-get upgrade -y
 
