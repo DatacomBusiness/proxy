@@ -43,6 +43,7 @@ function setup {
 	sudo luarocks install lua-resty-socket
 	sudo luarocks install lua-cjson
 	sudo luarocks install luaposix
+	sudo luarocks install lua-resty-requests
 
 	apt-get upgrade -y
 
